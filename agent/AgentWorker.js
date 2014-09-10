@@ -165,19 +165,19 @@ catch (e) {
         var zipper = exec(agent.sevenZipPath || '7z', { maxBuffer: maxBuffer }, function (err) {
             if (!err) {
                 zipArchiver = '7z';
-//console.log("7z found");
             }
             else {
-                exec('"c:\\Program Files\\7-Zip\\7z.exe"', { maxBuffer: maxBuffer }, function (err) {
+                exec('"C:\\Program\ Files\\7-Zip\\7z.exe"', { maxBuffer: maxBuffer }, function (err) {
                     if (!err) {
                         zipArchiver = '7z64';
-                        //console.log("c:\\Program Files\\7-Zip\\7z.exe found");
-                        if (agent.sevenZipPath == "7z")
-                            agent.sevenZipPath = "c:\\Program Files\\7-Zip\\7z.exe";
+                        if (agent.sevenZipPath == "7z") {
+                            agent.sevenZipPath = '"C:\\Program\ Files\\7-Zip\\7z.exe"';
+                        }
                     }
                     else zipper = exec('/Applications/Keka.app/Contents/Resources/keka7z', { maxBuffer: maxBuffer }, function (err) {
-                        if (!err)
+                        if (!err) {
                             zipArchiver = 'keka7z';
+                        }
 //else exec('unzip', { maxBuffer: maxBuffer }, function (err) {
 //    if (!err)
 //        zipArchiver = 'unzip';
@@ -383,7 +383,9 @@ catch (e) {
                 agent.log(build, Msg.build_output, data);
             });
             cordova_build.stderr.on('data', function (data) {
-                if (data)//get rid of new lines at the end                    data = data.replace(/\r?\n?$/m, '');                agent.log(build, Msg.error, data);
+                if (data)//get rid of new lines at the end
+                    data = data.replace(/\r?\n?$/m, '');
+                agent.log(build, Msg.error, data);
             });
 
         }
