@@ -96,9 +96,7 @@ AgentWorker.define({
         this.build.conf.status = 'cancelled';
         try {
             this.exec && this.exec.kill();
-        }
-catch (e) {
-        }
+        } catch (e) {}
     },
     'onBuild': function (build) {
         if (!build) {

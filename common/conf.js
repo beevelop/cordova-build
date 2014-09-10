@@ -32,9 +32,6 @@ if (conf.mode == 'server' || conf.mode == 'all') {
 if (conf.mode == 'client' || conf.mode == 'all' || conf.build) {
     commandLine.addArgument('platforms', { type: 'string', required: false });
     commandLine.addArgument('files', { type: 'string', required: false });
-    commandLine.addArgument('wp8', { type: 'string', required: false });
-    commandLine.addArgument('ios', { type: 'string', required: false });
-    commandLine.addArgument('android', { type: 'string', required: false });
     commandLine.addArgument('build', { type: 'string', required: true  });
     commandLine.addArgument('number', { type: 'string', required: false });
     //commandLine.addArgument('iossignonly', { type: 'boolean', required: false});
@@ -43,6 +40,7 @@ if (conf.mode == 'client' || conf.mode == 'all' || conf.build) {
         if (!conf.iosprovisioningpath) throw new Error('-iosprovisioningpath:"path-to-your-provision-file.mobileprovision" was not being specified!');
         if (!conf.ioscodesignidentity) throw new Error('-ioscodesignidentity:"your-provision-name" was not being specified!');
             
+        commandLine.addArgument('ios', { type: 'string', required: false });
         commandLine.addArgument('iosprovisioningpath', { type: 'string', required: true});
         commandLine.addArgument('ioscodesignidentity', { type: 'string', required: true});
         commandLine.addArgument('iosprojectpath', { type: 'string', required: true });
@@ -50,6 +48,11 @@ if (conf.mode == 'client' || conf.mode == 'all' || conf.build) {
     }
     if (conf.build && conf.build.indexOf && conf.build.indexOf('android') >= 0) {
     	commandLine.addArgument('androidsign', { type: 'string', required: false });
+        commandLine.addArgument('android', { type: 'string', required: false });
+    }
+    
+    if (conf.build && conf.build.indexOf && conf.build.indexOf('wp8') >= 0) {
+        commandLine.addArgument('wp8', { type: 'string', required: false });
     }
     listen.client = true;
 }
@@ -72,7 +75,7 @@ function parseArgs() {
     conf.port = conf.port || 8300;
     conf.server = conf.server || 'localhost';
     conf.listen = listen;
-    conf.platforms = (conf.platforms || 'wp8,android,ios').split(/;|,/g);
+    conf.platforms = (conf.build || 'wp8,android,ios').split(/;|,/g);
     conf.wp8 = (conf.wp8 || '').split(/;|,/g);
     conf.android = (conf.android || '').split(/;|,/g);
     conf.ios = (conf.ios || '').split(/;|,/g);
