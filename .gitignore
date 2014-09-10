@@ -29,3 +29,6 @@ node_modules
 /clientOutput
 /obj
 /*.user
+/nbproject/private/
+
+nbproject
