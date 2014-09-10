@@ -1,46 +1,41 @@
 #!/usr/bin/env node
 
- 
 var extend = require('extend');
 var cordovaBuild = require('../');
 var conf = require('../common/conf.js')();
 var serverUtils = require('../common/serverUtils.js');
 var listen = conf.listen;
 
-
 //process.on('uncaughtException', function(err) {
 //    console.log(err);
 //    process.stdin.resume();
 //    console.log("press enter to close");
 //    process.stdin.setEncoding('utf8');
- 
+
 //    process.stdin.on('data', function (chunk) {
 //        process.exit(err && err.code)
 //    });
 //});
-    try {
-        process.openStdin().on('keypress', function (chunk, key) {
-            if (key && key.name === 'c' && key.ctrl) {
-                process.emit('SIGINT');
-                process.exit();
-            }
+try {
+    process.openStdin().on('keypress', function(chunk, key) {
+        if (key && key.name === 'c' && key.ctrl) {
+            process.emit('SIGINT');
+            process.exit();
+        }
+    });
+
+    if (process.platform === 'win32') {
+        var readLine = require('readline');
+        var rl = readLine.createInterface({
+            input: process.stdin,
+            output: process.stdout
         });
 
-        if (process.platform === 'win32') {
-            var readLine = require('readline');
-            var rl = readLine.createInterface({
-                input: process.stdin,
-                output: process.stdout
-            });
-
-            rl.on('SIGINT', function () {
-                process.emit('SIGINT');
-            });
-
-        }
+        rl.on('SIGINT', function() {
+            process.emit('SIGINT');
+        });
     }
-    catch(e) {
-    }
+} catch (e) {}
 
 if (listen.server || listen.ui) {
     var server = conf.serverInstance = new cordovaBuild.Server(conf);
@@ -56,7 +51,6 @@ if (listen.agent) {
         agents.push(agent);
         agent.connect();
     });
-    
 }
 
 if (listen.client) {

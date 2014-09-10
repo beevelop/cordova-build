@@ -1,4 +1,4 @@
-﻿module.exports = function BrowserDetect(userAgent){
+module.exports = function BrowserDetect(userAgent){
     this.userAgent = userAgent || '';
 }.define({
     android: function() {
