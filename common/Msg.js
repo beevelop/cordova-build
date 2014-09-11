@@ -14,7 +14,7 @@ function Msg(build) {
     }
 }
 Msg.define({
-    update: function (build, sender, by, priority, message, args) {
+    update: function(build, sender, by, priority, message, args) {
         this.priority = priority;
         this.buildId = build && build.id || build;
         this.senderId = sender && sender.id || sender;
@@ -30,14 +30,24 @@ Msg.define({
         }
         this.message = ''.format.apply(msg || '', arguments);
     },
-    toString: function (doNotIncludePrefix) {
+    toString: function(doNotIncludePrefix) {
         var by, msg;
         switch (this.by) {
-            case 'A': by = '[SA] Server'; break;
-            case 'AW': by = '[AW] Agent'; break;
-            case 'C': by = '[SC] Server'; break;
-            case 'CW': by = '[CW] Client'; break;
-            case 'S': by = '[S] Server'; break;
+            case 'A':
+                by = '[SA] Server';
+                break;
+            case 'AW':
+                by = '[AW] Agent';
+                break;
+            case 'C':
+                by = '[SC] Server';
+                break;
+            case 'CW':
+                by = '[CW] Client';
+                break;
+            case 'S':
+                by = '[S] Server';
+                break;
         }
         if (doNotIncludePrefix || this.priority == Msg.build_output && doNotIncludePrefix !== false) {
             msg = this.message;

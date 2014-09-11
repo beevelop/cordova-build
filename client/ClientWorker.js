@@ -66,8 +66,9 @@ ClientWorker.define({
         var client = this;
         var files = this.files;
         var platforms = this.conf.build;
-        if (this.conf.number && this.conf.number.indexOf && this.conf.number.indexOf('0.') == 0)
+        if (this.conf.number && this.conf.number.indexOf && this.conf.number.indexOf('0.') == 0) {
             this.conf.number = this.conf.number.substr(2);
+        }
         var build = this.build = new Build({
             logs: [],
             status: 'uploading',
