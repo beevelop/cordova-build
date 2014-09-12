@@ -19,17 +19,21 @@ module.exports = {
                 files.length ? async.each(files, function(file, cb) {
                     var fileName = path.resolve(folder, path.basename(file.file));
                     file.file = fileName;
-                    var data = new Buffer(file.content.data, 'base64');
-                    file.content ? fs.writeFile(fileName, data, {
-                        encoding: 'binary'
-                    }, function(err) {
-                        !doNotFreeMem && delete file.content; //free server's memory with file's content
-                        cb(err);
-                    })
-                            : cb(null);
+                    try {
+                        var data = new Buffer(file.content.data, 'base64');
+                        file.content ? fs.writeFile(fileName, data, {
+                            encoding: 'binary'
+                        }, function(err) {
+                            !doNotFreeMem && delete file.content; //free server's memory with file's content
+                            cb(err);
+                        }) : cb(null);
+                    } catch (e) {
+                        cb(e);
+                    }
                 }, function(err) {
-                    if (err)
+                    if (err) {
                         err = "error saving cordova build files to {0} on {1}\n{2}".format(folder, locationMsg, err);
+                    }
                     done(err);
                 }) : done(null);
             }

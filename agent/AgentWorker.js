@@ -5,6 +5,7 @@ var $ = require('stringformat'),
     shortid = require('shortid'),
     fileSize = require('filesize'),
     multiGlob = require('multi-glob'),
+    unzip = require('unzip'),
     ioc = require('socket.io/node_modules/socket.io-client'),
     fs = require('fs.extra'),
     path = require('path'),
@@ -214,20 +215,21 @@ AgentWorker.define({
                     done();
                 });
                 break;
-//case 'unzip':
-//    exec('unzip -uo {0} -d {1} '.format(file, target), opts, function (err, stdout, stderr) {
-//        stdout && agent.log(build, Msg.debug, '{2}', stdout);
-//        if (err || stderr) return agent.buildFailed(build, 'error executing unzip\n{2}\n{3}', err, stderr);
-//        done();
-//    });
-//    break;
+                //case 'unzip':
+                //    exec('unzip -uo {0} -d {1} '.format(file, target), opts, function (err, stdout, stderr) {
+                //        stdout && agent.log(build, Msg.debug, '{2}', stdout);
+                //        if (err || stderr) return agent.buildFailed(build, 'error executing unzip\n{2}\n{3}', err, stderr);
+                //        done();
+                //    });
+                //    break;
             default:
                 return agent.buildFailed(build, 'cannot find 7z: {2}', zipArchiver || 'searched {0}, /Applications/Keka.app/Contents/Resources/keka7z'.format(this.sevenZipPath));
         }
     },
     extractArchive: function(build, file, target, opts, done) {
         var agent = this;
-        switch (zipArchiver) {
+        //switch (zipArchiver) { @TODO: remove
+        switch ('unzip') {
             case '7z':
             case '7z64':
                 var cmd = '{0} x {1} -o{2} -y'.format(agent.sevenZipPath, file, target);
@@ -250,6 +252,24 @@ AgentWorker.define({
                     //stdout && agent.log(build, Msg.debug, '{2}', stdout);
                     if (err) {
                         return agent.buildFailed(build, 'error executing keka7z\n{2}\n{3}', err, stderr);
+                    }
+                    done();
+                });
+                break;
+            case 'unzip':
+                console.log('\n\nUsing node-unzip to extract '+file+' to '+target);
+                var extrator = unzip.Extract({ path: target });
+                fs.createReadStream(file).pipe(extrator);
+                extrator.on('error', function (err) {
+                    if (err) {
+                        return agent.buildFailed(build, 'Error unzipping {1}:\nTarget:{2}\nErr:{3}', file, target, err);
+                    } else {
+                        return agent.buildFailed(build, 'Error unzipping {1}:\nTarget:{2}\nError is not available!', file, target);
+                    }
+                });
+                extrator.on('close', function () {
+                    if (build.conf.status === 'cancelled') {
+                        return;
                     }
                     done();
                 });

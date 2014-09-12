@@ -60,7 +60,7 @@ Agent.define({
         var id = build.masterId || responseBuild.id;
         var locationPath = path.resolve(server.location, build.master && build.master.Id() || build.Id());
 
-        this.log(build, client, Msg.info, 'files uploaded. Storing them on the server', locationPath);
+        this.log(build, client, Msg.info, 'Files received. Storing them on the server', locationPath);
 
         var outputFiles = responseBuild.outputFiles;
         build.outputFiles = outputFiles;
@@ -93,13 +93,13 @@ Agent.define({
                                 var buildPath = path.resolve(locationPath, 'build.json');
                                 try {
                                     var buildJSON = fs.readFileSync(buildPath, 'utf-8');
+                                    build.outputFiles.push({
+                                        file: 'build.json',
+                                        content: {data: buildJSON}
+                                    });
                                 } catch (e) {
-                                    //@TODO: error-handling?
+                                    agent.log(build, client, Msg.error, buildPath + ' could not be read... continuing anyway!');
                                 }
-                                build.outputFiles.push({
-                                    file: 'build.json',
-                                    content: {data: buildJSON}
-                                });
                             }
                         }
                         if (build.conf.save) {

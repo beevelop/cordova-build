@@ -167,7 +167,7 @@ ClientWorker.define({
             //@TODO: error-handling
         } finally {
             if (!this.conf.listen.server && !this.conf.listen.agent) {
-                process.exit(0);//the client worker should disconnect and close the process since the job was done!
+                process.exit(0);
             }
         }
     },

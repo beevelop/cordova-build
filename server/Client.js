@@ -45,8 +45,7 @@ module.exports = Function.define({
 		var buildConf = build && build.conf;
 		buildConf.started = new Date();
 		if (this.validateBuildRequest(build)) {
-			var buildObj = new Build(buildConf, this, null, buildConf.platform,
-                build.files, null, build.id, null);
+			var buildObj = new Build(buildConf, this, null, buildConf.platform, build.files, null, build.id, null);
 			//from now on keep a Build object
 			build = buildObj;
 			this.server.builds.push(build);

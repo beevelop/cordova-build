@@ -30,7 +30,8 @@
     "adm-zip": "~0.4.4",
     "proto-typer": "~0.2.2",
     "circular-json": "~0.1.6",
-    "mu2": "~0.5.20"
+    "mu2": "~0.5.20",
+    "unzip": "~0.1.11"
   },
   "repository": {
     "type": "git",
