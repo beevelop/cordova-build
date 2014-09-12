@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var extend = require('extend');
-var cordovaBuild = require('../');
-var conf = require('../common/conf.js')();
-var serverUtils = require('../common/serverUtils.js');
-var listen = conf.listen;
+var extend = require('extend'),
+    cordovaBuild = require('../'),
+    conf = require('../common/conf.js')(),
+    serverUtils = require('../common/serverUtils.js'),
+    listen = conf.listen;
 
 //process.on('uncaughtException', function(err) {
 //    console.log(err);
@@ -35,7 +35,9 @@ try {
             process.emit('SIGINT');
         });
     }
-} catch (e) {}
+} catch (e) {
+    //@TODO: error-handling?
+}
 
 if (listen.server || listen.ui) {
     var server = conf.serverInstance = new cordovaBuild.Server(conf);

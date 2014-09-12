@@ -1,13 +1,14 @@
 {
   "name": "cordova-build",
-  "version": "0.0.236",
+  "version": "0.1.0",
   "description": "Cordova build - an alternative to phonegap build that runs on your servers/agents",
   "main": "index.js",
   "bin": "bin/cmd.js",
-  "author": {
-    "name": "dotnetwise",
-    "email": "laurentiu.macovei@dotnetwise.com"
-  },
+  "author": "dotnetwise <laurentiu.macovei@dotnetwise.com>",
+  "contributors": [{
+    "name": "Maik Hummel",
+    "email": "info@mh-programming.de"
+  }],
   "dependencies": {
     "socket.io": "~0.9.16",
     "node-commandline": "~0.2.0",
@@ -30,5 +31,18 @@
     "proto-typer": "~0.2.2",
     "circular-json": "~0.1.6",
     "mu2": "~0.5.20"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beevelop/cordova-build"
+  },
+  "bugs": {
+    "url": "https://github.com/beevelop/cordova-build/issues"
+  },
+  "keywords": [
+    "cordova",
+    "phonegap",
+    "build",
+    "server"
+  ]
 }

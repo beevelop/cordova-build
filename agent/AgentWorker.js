@@ -279,6 +279,7 @@ AgentWorker.define({
         }
 
         return agent.conf.reuseworkfolder ? agent.ensureWorkFolder(s3WriteFiles) : s1Cleanup();
+        
         function s1Cleanup() {
             if (build.conf.status === 'cancelled') {
                 return;
@@ -406,6 +407,7 @@ AgentWorker.define({
                 s7BuildCordova();
             }
         }
+        
         function s7BuildCordova(err, args) {
             if (build.conf.status === 'cancelled') {
                 return;
@@ -449,8 +451,8 @@ AgentWorker.define({
                 }
                 agent.log(build, Msg.error, data);
             });
-
         }
+        
         function s8BuildExecuted(err, stdout, stderr) {
             if (build.conf.status === 'cancelled') {
                 return;
@@ -481,8 +483,9 @@ AgentWorker.define({
     buildWP8: function(build) {
         this.computeLocationFolder(build);
         this.genericBuild(build, null, function(err) {
-            if (build.conf.status === 'cancelled')
+            if (build.conf.status === 'cancelled') {
                 return;
+            }
             !err && this.buildSuccess(build, ['platforms/wp8/**/*.xap', 'build.wp8.log']);
         });
     },
@@ -652,18 +655,20 @@ AgentWorker.define({
                     var source = build.conf[build.conf.buildmode == 'release' ? 'androidreleaseapk' : 'androiddebugapk'];
                     var dest = path.resolve(androidFolder, path.basename(source));
                     fs.copy(source, dest, function(err) {
-                        if (build.conf.status === 'cancelled')
+                        if (build.conf.status === 'cancelled') {
                             return;
-                        if (err)
-                            return agent.buildFailed(build, 'Error copying apk {2} to {3}\n{4}', source, dest, err);
+                        }
+                        if (err) {
+                            return agent.buildFailed(build, 'Error copying apk {2} to {3}\n{4}', source, dest, err);   
+                        }
                         apkGlobPath = [dest];
                         updateAssetsWWW = true;
                         agent.log(build, Msg.info, "Apk found {2}. Updating only assets/www for a faster build", apkGlobPath[0]);
                         ensureAssetsFolder("cordova prepare {0} {1}");
                     });
-                }
-                else
+                } else {
                     ensureAssetsFolder();
+                }
             });
             function ensureAssetsFolder(command) {
                 agent.log(build, Msg.info, "Ensuring android work folder {2}", assetsFolder);
@@ -731,9 +736,9 @@ AgentWorker.define({
                         }, 'android sign process exited with code {2}');
                     }
                 });
-            }
-            else
+            } else {
                 done();
+            }
             function zipAlign(apk) {
                 var output = apk.replace('-unsigned', '').replace('-unaligned', '');
                 var key = build.conf.androidsign.match(/(.*)(\\|\/| )(.*)(\.keystore)/i);
@@ -762,8 +767,9 @@ AgentWorker.define({
         }
     },
     buildSuccess: function(build, globFiles) {
-        if (build.conf.status === 'cancelled')
+        if (build.conf.status === 'cancelled') {
             return;
+        }
         var agent = this;
         var workFolder = build.locationPath;
         multiGlob.glob(globFiles, {
@@ -780,8 +786,9 @@ AgentWorker.define({
             });
             agent.emit('uploading', build.id);//change build status to uploading..
             serverUtils.readFiles(files, '[Agent WORKER] cordova build agent worker output files', function(err) {
-                if (build.conf.status === 'cancelled')
+                if (build.conf.status === 'cancelled') {
                     return;
+                }
                 if (err) {
                     serverUtils.freeMemFiles(files);
                     return agent.buildFailed(build, err);
@@ -795,7 +802,7 @@ AgentWorker.define({
                 var size = 0;
                 outputFiles.forEach(function(file) {
                     size += file && file.content && file.content.data && file.content.data.length || 0;
-                })<
+                });
                 size && agent.log(build, Msg.info, 'Uploading results file(s) to cordova build server...{0}'.format(fileSize(size)));
                 var paths = [];
                 outputFiles.forEach(function(file) {
@@ -831,8 +838,9 @@ AgentWorker.define({
         }
     },
     buildFailed: function(build, err, args) {
-        if (build.conf.status === 'cancelled')
+        if (build.conf.status === 'cancelled') {
             return;
+        }
         try {
             throw new Error("failed with stack");
         } catch (e) {
