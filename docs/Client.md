@@ -15,6 +15,9 @@
 	-port:<port>
 		the server's port (int)
 		default:8300
+    -save:<path>
+		path where the agents' results (e.g. android's apks) should be stored
+		default:none
 
 ## iOS-Options
 	-ios:<file.7z,file.zip>

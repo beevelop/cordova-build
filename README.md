@@ -21,4 +21,4 @@ An easy way to handle your own cordova builds without using Phonegap Build Serve
 
 # Credits
 
-All credits belong to the original author [DotNetWise](http://www.dotnetwise.com/). This project is just a fork to adapt this project to my personal needs.
+All credits belong to the original author Laurenţio Macovei from [DotNetWise](http://www.dotnetwise.com/). This project is just a fork to adapt this awesome project to my personal needs.
