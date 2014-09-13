@@ -7,7 +7,6 @@ var async = require('async'),
     Msg = require('../common/Msg.js'),
     extend = require('extend'),
     fileSize = require('filesize'),
-    mkdirp = require('mkdirp'),
     CircularJSON = require('circular-json');
     
 function Agent(socket) {
@@ -67,7 +66,7 @@ Agent.define({
         outputFiles.forEach(function(file) {
             file.file = [build.conf.number, build.conf.number && '.' || '', file.name || path.basename(file.file)].join('');
         });
-        mkdirp(locationPath, function(err) {
+        fs.mkdirs(locationPath, function(err) {
             if (err) {
                 this.log(build, client, Msg.error, 'error creating folder {2} on the cordova build server\n{3}', locationPath, err);
                 this.server.updateBuildStatus(build, "failed");

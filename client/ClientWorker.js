@@ -1,20 +1,19 @@
 module.exports = ClientWorker;
-var ioc = require('socket.io/node_modules/socket.io-client');
-var fs = require('fs-extra');
-var path = require('path');
-var mkdirp = require('mkdirp');
-
-var extend = require('extend');
-var async = require('async');
-var fileSize = require('filesize');
-var shortid = require('shortid');
-var Elapsed = require('elapsed');
-var CircularJSON = require('circular-json');
-
-var Build = require('../common/Build.js');
-var Msg = require('../common/Msg.js');
-var serverUtils = require('../common/serverUtils');
-var sig = 'CW';
+var ioc = require('socket.io/node_modules/socket.io-client'),
+    fs = require('fs-extra'),
+    path = require('path'),
+    
+    extend = require('extend'),
+    async = require('async'),
+    fileSize = require('filesize'),
+    shortid = require('shortid'),
+    Elapsed = require('elapsed'),
+    CircularJSON = require('circular-json'),
+    
+    Build = require('../common/Build.js'),
+    Msg = require('../common/Msg.js'),
+    serverUtils = require('../common/serverUtils'),
+    sig = 'CW';
 
 function ClientWorker(conf) {
     this.conf = conf;

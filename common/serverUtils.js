@@ -1,9 +1,10 @@
-var path = require('path');
-var fs = require('fs-extra');
-var async = require('async');
-var mkdirp = require('mkdirp');
-var extend = require('extend');
-var multiGlob = require('multi-glob');
+var path = require('path'),
+    fs = require('fs-extra'),
+    async = require('async'),
+    extend = require('extend'),
+    multiGlob = require('multi-glob');
+    
+    
 module.exports = {
     writeFiles: function(folder, files, locationMsg, doNotFreeMem, done) {
         if (typeof doNotFreeMem == 'function') {
@@ -11,7 +12,7 @@ module.exports = {
             doNotFreeMem = false;
         }
         var server = this;
-        mkdirp(folder, function(err) {
+        fs.mkdirs(folder, function(err) {
             if (err) {
                 err = "error creating folder {0} on {1}\n{2}".format(folder, locationMsg, err);
                 done(err);
