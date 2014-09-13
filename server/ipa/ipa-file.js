@@ -6,45 +6,39 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+var util = require('util'),
+    typer = require('proto-typer'),
+    EventEmitter = require('events').EventEmitter,
+    AdmZip = require('adm-zip'),
+    fs = require('fs-extra');
 
-var util		 = require('util'),
-	typer		 = require('proto-typer'),
-	EventEmitter = require('events').EventEmitter,
-	AdmZip		 = require('adm-zip');
-var fs = require('fs.extra');
-
-module.exports = function() {
-	define();
-	return IPAFile;
+module.exports = function () {
+    define();
+    return IPAFile;
 }();
 
-
 function IPAFile(path, Info_plist) {
-	this.Info_plist = Info_plist;
-	if (path)
-		this.path = path;
+    this.Info_plist = Info_plist;
+    if (path) {
+        this.path = path;
+    }
 }
-
 
 function define() {
-	
-	util.inherits(IPAFile, EventEmitter);
-		
-	typer
-	.define(IPAFile.prototype)
-	.p('_path').nk.f
-	.u('path', getPathAccessors)
-	.p('_file').nk.f
-	.u('file', getFileAccessors)
-	.p('name').t(String).e().f
-	.p('version').t(String).e().f
-	.p('id').t(String).e().f
-	.p('team').t(String).e().f
-	.p('icon').e().f;
+    util.inherits(IPAFile, EventEmitter);
+
+    typer
+        .define(IPAFile.prototype)
+        .p('_path').nk.f
+        .u('path', getPathAccessors)
+        .p('_file').nk.f
+        .u('file', getFileAccessors)
+        .p('name').t(String).e().f
+        .p('version').t(String).e().f
+        .p('id').t(String).e().f
+        .p('team').t(String).e().f
+        .p('icon').e().f;
 }
-
-
 
 /////////////////////////////
 //                         //
@@ -52,41 +46,43 @@ function define() {
 //                         //
 /////////////////////////////
 
-
 function getPathAccessors() {
-	return {
-		'enumerable': true,
-		'get': function() { return this._path},
-		'set': function(value) {
-			if (this._path !== value) {
-				var oldValue = this._path;
-				this._path = value;
-				this.file = new AdmZip(value);
-				this.emit('propertyChange', {
-					'type': 'propertyChange',
-					'target': this,
-					'property': 'path',
-					'oldValue': oldValue,
-					'newValue': value
-				})
-			}
-		}
-	}			
+    return {
+        'enumerable': true,
+        'get': function () {
+            return this._path;
+        },
+        'set': function (value) {
+            if (this._path !== value) {
+                var oldValue = this._path;
+                this._path = value;
+                this.file = new AdmZip(value);
+                this.emit('propertyChange', {
+                    'type': 'propertyChange',
+                    'target': this,
+                    'property': 'path',
+                    'oldValue': oldValue,
+                    'newValue': value
+                });
+            }
+        }
+    };
 }
 
 function getFileAccessors() {
-	return {
-		'enumerable': true,
-		'get': function() { return this._file; },
-		'set': function(value) {
-			if (this._file !== value) {
-				this._file = value;
-				startParsing(this);
-			}
-		}
-	}	
+    return {
+        'enumerable': true,
+        'get': function () {
+            return this._file;
+        },
+        'set': function (value) {
+            if (this._file !== value) {
+                this._file = value;
+                startParsing(this);
+            }
+        }
+    };
 }
-
 
 
 ///////////////////
@@ -95,64 +91,62 @@ function getFileAccessors() {
 //               //
 ///////////////////
 
-
 function startParsing(target) {
-	
-	var file		= target.file,
-		entries		= file.getEntries(),
-		nbrEntries	= entries.length,
-		keys 		= {
-			'name': 'CFBundleDisplayName',
-			'version': 'CFBundleVersion',
-			'id': 'CFBundleIdentifier',
-			'team': 'TeamName'
-		},
-		foundInfo,
-		foundProvision,
-		foundIcon
-	;
 
-	for (var i = 0; i < nbrEntries; i++) {
-		
-		var entry = entries[i];
-		
-		if (!foundInfo && entry.entryName.match(/Info\.plist$/)) {
-			foundInfo = true;
-			var data = target.Info_plist ? fs.readFileSync(target.Info_plist, 'UTF-8') : file.readAsText(entry);
-			target.name = getKey(data, keys.name);
-			target.version = getKey(data, keys.version);
-			target.id = getKey(data, keys.id);
-		}
-		
-		if (!foundProvision && entry.entryName.match(/embedded\.mobileprovision$/)) {
-			foundProvision = true;
-			var data = file.readAsText(entry);
-			target.team = getKey(data, keys.team);
-		}
-		
-		if (!foundIcon && entry.entryName.match(/Icon\.png$/i)) {
-			foundIcon = true;
-			var data = file.readFile(entry);
-			target.icon = data;
-		}
-		
-		if (foundInfo && foundProvision && foundIcon)
-			break;
-	}
+    var file = target.file,
+            entries = file.getEntries(),
+            nbrEntries = entries.length,
+            keys = {
+                'name': 'CFBundleDisplayName',
+                'version': 'CFBundleVersion',
+                'id': 'CFBundleIdentifier',
+                'team': 'TeamName'
+            },
+    foundInfo,
+            foundProvision,
+            foundIcon;
+
+    for (var i = 0; i < nbrEntries; i++) {
+
+        var entry = entries[i];
+
+        if (!foundInfo && entry.entryName.match(/Info\.plist$/)) {
+            foundInfo = true;
+            var data = target.Info_plist ? fs.readFileSync(target.Info_plist, 'UTF-8') : file.readAsText(entry);
+            target.name = getKey(data, keys.name);
+            target.version = getKey(data, keys.version);
+            target.id = getKey(data, keys.id);
+        }
+
+        if (!foundProvision && entry.entryName.match(/embedded\.mobileprovision$/)) {
+            foundProvision = true;
+            var data = file.readAsText(entry);
+            target.team = getKey(data, keys.team);
+        }
+
+        if (!foundIcon && entry.entryName.match(/Icon\.png$/i)) {
+            foundIcon = true;
+            var data = file.readFile(entry);
+            target.icon = data;
+        }
+
+        if (foundInfo && foundProvision && foundIcon) {
+            break;
+        }
+    }
 
 }
 
 function getKey(target, key) {
-	var pattern = key + '(.|[\r\n])+?string>(.*)?(?=</string>)';
-	var string;
-	
-	var matches = target.match(new RegExp(pattern));
-		
-	if (matches && matches.length > 0)
-		string = matches[2];
-	else
-		string = 'Not find';
-	
-	return string;
-}
+    var pattern = key + '(.|[\r\n])+?string>(.*)?(?=</string>)';
+    var string;
 
+    var matches = target.match(new RegExp(pattern));
+
+    if (matches && matches.length > 0) {
+        string = matches[2];
+    } else {
+        string = 'Not find';
+    }
+    return string;
+}

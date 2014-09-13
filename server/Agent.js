@@ -1,7 +1,7 @@
 module.exports = Agent;
 
 var async = require('async'),
-    fs = require('fs.extra'),
+    fs = require('fs-extra'),
     path = require('path'),
     serverUtils = require('../common/serverUtils'),
     Msg = require('../common/Msg.js'),

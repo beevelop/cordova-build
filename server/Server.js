@@ -9,7 +9,7 @@ var Build = require('../common/Build'),
     IPAFile = require('./ipa/ipa-file.js'),
     
     path = require('path'),
-    fs = require('fs.extra'),
+    fs = require('fs-extra'),
     multiGlob = require('multi-glob'),
     async = require('async'),
     mkdirp = require('mkdirp'),

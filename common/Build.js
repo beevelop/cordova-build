@@ -2,7 +2,7 @@ module.exports = Build;
 require('fast-class');
 var CircularJSON = require('circular-json'),
     extend = require('extend'),
-    fs = require('fs.extra'),
+    fs = require('fs-extra'),
     path = require('path'),
     shortid = require('shortid'),
     statuses = ['unknown', 'cancelled', 'success', 'planned', 'queued', 'uploading', 'building', 'failed'],
