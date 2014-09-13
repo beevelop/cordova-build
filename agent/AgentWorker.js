@@ -1,6 +1,7 @@
 module.exports = AgentWorker;
 
 var $ = require('stringformat'),
+    os = require('os'),
     async = require('async'),
     shortid = require('shortid'),
     fileSize = require('filesize'),
@@ -21,7 +22,7 @@ var $ = require('stringformat'),
     zipArchiver;
     
     
-function AgentWorker(conf, options) {
+function AgentWorker(conf) {
     this.id = shortid.generate();
     this.conf = conf || {};
     this.sevenZipPath = conf["7zpath"] || "7z";
@@ -442,8 +443,11 @@ AgentWorker.define({
                 cmd += ' | tee "' + path.resolve(locationPath, 'build.ios.xcodebuild.log') + '" | egrep -A 5 -i "(error|warning|succeeded|fail|codesign|running|return)"';
             }
             if (build.conf.platform == 'android') {
-                //cmd += ' | "platforms\\android\\cordova\\lib\\tee.exe" "build.android.log" | "platforms\\android\\cordova\\lib\\egrep.exe" -i -A 6 "(error|warning|success|sign)"';
-                cmd += ' | "' + tee + '" "build.android.log" | "' + egrep + '" -i -A 6 "(error|warning|success|sign)"';
+                if (os.platform() === 'linux') {
+                    cmd += ' | tee "build.android.log" | egrep -i -A 6 "(error|warning|success|sign)"';
+                } else {
+                    cmd += ' | "' + tee + '" "build.android.log" | "' + egrep + '" -i -A 6 "(error|warning|success|sign)"';
+                }
             }
 
             agent.log(build, Msg.status, 'Executing {2}', cmd);
