@@ -8,10 +8,9 @@ var $ = require('stringformat'),
     multiGlob = require('multi-glob'),
     unzip = require('unzip'),
     ioc = require('socket.io/node_modules/socket.io-client'),
-    fs = require('fs.extra'),
+    fs = require('fs-extra'),
     path = require('path'),
     exec = require('child_process').exec,
-    mkdirp = require('mkdirp'),
     Build = require('../common/Build.js'),
     Msg = require('../common/Msg.js'),
     splice = Array.prototype.splice,
@@ -150,7 +149,7 @@ AgentWorker.define({
         var workFolder = this.workFolder = path.resolve(this.workFolder);
         var agent = this;
 
-        mkdirp(workFolder, function(err) {
+        fs.mkdirs(workFolder, function(err) {
             if (err) {
                 agent.log(null, Msg.error, 'Cannot create folder: {2}', workFolder);
                 process.env.PWD = workFolder;
@@ -258,7 +257,6 @@ AgentWorker.define({
                 });
                 break;
             case 'unzip':
-                console.log('\n\nUsing node-unzip to extract '+file+' to '+target);
                 var extrator = unzip.Extract({ path: target });
                 fs.createReadStream(file).pipe(extrator);
                 extrator.on('error', function (err) {
@@ -445,24 +443,40 @@ AgentWorker.define({
             if (build.conf.platform == 'android') {
                 if (os.platform() === 'linux') {
                     cmd += ' | tee "build.android.log" | egrep -i -A 6 "(error|warning|success|sign)"';
+                    
+                    // Set cordova build permission
+                    var cb_file = path.resolve(locationPath, 'platforms/android/cordova/build');
+                    if (fs.existsSync(cb_file)) {
+                        console.log(cb_file + ' has been found! Trying to set chmod...');
+                        fs.chmodSync(cb_file, '755', function (err) {
+                            err && console.log('Permission for ' + cb_file + ' could not be set!');
+                        });
+                    } else {
+                        console.log(cb_file + ' doesn\'t exist :(\n\n\n');
+                    }
                 } else {
                     cmd += ' | "' + tee + '" "build.android.log" | "' + egrep + '" -i -A 6 "(error|warning|success|sign)"';
                 }
             }
 
             agent.log(build, Msg.status, 'Executing {2}', cmd);
+            
+            
+            //@TODO: error-handling (=> build = failed) when command returns error (e.g. missing android sdk target,...)
+            //return buildFailed('error...\n{2}', err);
+            
             var cordova_build = exec(cmd, {
                 cwd: locationPath,
                 maxBuffer: maxBuffer
-            }, s8BuildExecuted)
-                    .on('close', function(code) {
-                        if (build.conf.status === 'cancelled') {
-                            return;
-                        }
-                        if (code && code != 1) {
-                            return buildFailed('child process exited with code ' + code);
-                        }
-                    });
+            }, s8BuildExecuted);
+            cordova_build.on('close', function(code) {
+                if (build.conf.status === 'cancelled') {
+                    return;
+                }
+                if (code && code != 1) {
+                    return buildFailed('child process exited with code ' + code);
+                }
+            });
             cordova_build.stdout.on('data', function(data) {
                 if (data) {//get rid of new lines at the end
                     data = data.replace(/\r?\n?$/m, '');
@@ -696,7 +710,7 @@ AgentWorker.define({
             });
             function ensureAssetsFolder(command) {
                 agent.log(build, Msg.info, "Ensuring android work folder {2}", assetsFolder);
-                mkdirp(assetsFolder, runCordovaBuild.bind(agent, command));
+                fs.mkdirs(assetsFolder, runCordovaBuild.bind(agent, command));
             }
             function runCordovaBuild(command, err) {
                 if (build.conf.status === 'cancelled') {
