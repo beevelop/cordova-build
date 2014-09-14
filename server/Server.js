@@ -1,11 +1,11 @@
 module.exports = Server;
-var Build = require('../common/Build'),
-    Msg = require('../common/Msg.js'),
+var Build = require('../lib/common/Build'),
+    Msg = require('../lib/common/Msg.js'),
     Client = require('./Client'),
     Agent = require('./Agent'),
     WWW = require('./WWW'),
-    serverUtils = require('../common/serverUtils'),
-    BrowserDetect = require('../common/BrowserDetect'),
+    serverUtils = require('../lib/common/serverUtils'),
+    BrowserDetect = require('../lib/common/BrowserDetect'),
     IPAFile = require('./ipa/ipa-file.js'),
     
     path = require('path'),

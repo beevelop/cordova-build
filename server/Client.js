@@ -4,9 +4,9 @@ var path = require('path'),
     fs = require('fs-extra'),
     async = require('async'),
     extend = require('extend'),
-    Build = require('../common/Build.js'),
-    Msg = require('../common/Msg.js'),
-    serverUtils = require('../common/serverUtils');
+    Build = require('../lib/common/Build.js'),
+    Msg = require('../lib/common/Msg.js'),
+    serverUtils = require('../lib/common/serverUtils');
 
 
 module.exports = Function.define({

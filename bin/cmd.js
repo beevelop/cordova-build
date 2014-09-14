@@ -2,8 +2,8 @@
 
 var extend = require('extend'),
     cordovaBuild = require('../'),
-    conf = require('../common/conf.js')(),
-    serverUtils = require('../common/serverUtils.js'),
+    conf = require('../lib/common/conf.js')(),
+    serverUtils = require('../lib/common/serverUtils.js'),
     listen = conf.listen;
 
 //process.on('uncaughtException', function(err) {
