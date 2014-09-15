@@ -103,7 +103,6 @@
                     </ul>
                 </div>
 
-
                 <!-- theme selector starts -->
                 <div class="btn-group pull-right theme-container">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -123,32 +122,6 @@
                     </ul>
                 </div>
                 <!-- theme selector ends -->
-
-                <!-- user dropdown starts -->
-                <!--                <div class="btn-group pull-right">
-                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="icon-user"></i><span class="hidden-phone">admin</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Profile</a></li>
-                        <li class="divider"></li>
-                        <li><a href="login.html">Logout</a></li>
-                    </ul>
-                </div>-->
-                <!-- user dropdown ends -->
-
-                <!--                <div class="top-nav nav-collapse">
-                    <ul class="nav">
-                        <li><a href="#">Visit Site</a></li>
-                        <li>
-                            <form class="navbar-search pull-left">
-                            <input placeholder="Search" class="search-query span2" name="query" type="text">
-                            </form>
-                        </li>
-                    </ul>
-                </div>-->
-                <!--/.nav-collapse -->
             </div>
         </div>
     </div>
@@ -156,66 +129,14 @@
     <div class="container-fluid" style="position: relative">
         <div class="row-fluid">
 
-            <!-- left menu starts -->
-            <!--<div class="span2 main-menu-span">
-                <div class="well nav-collapse sidebar-nav">
-                    <ul class="nav nav-tabs nav-stacked main-menu">
-                        <li class="nav-header hidden-tablet">Main</li>
-                        <li><a class="ajax-link" href="/"><i class="icn icon-home"></i><span class="hidden-tablet">Dashboard</span></a>
-                        </li>
-                    </ul>
-                    
-                </div>
-            </div>-->
-            <!--  <label id="for-is-ajax" class="hidden-tablet" for="is-ajax">
-                        <input id="is-ajax" type="checkbox">
-                        Ajax on menu</label>-->
-            <!--/span-->
-            <!-- left menu ends -->
-
             <noscript>
             <div class="alert alert-block span10">
                 <h4 class="alert-heading">Warning!</h4>
-                <p>
-                    You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>
-                    enabled to use this site.
-                </p>
+                <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
             </div>
             </noscript>
 
             <div id="content" class="span12 no-gutter">
-                <!-- content starts -->
-
-                <!-- <div class="sortable row-fluid">
-                    <a data-rel="tooltip" title="6 new members." class="well span3 top-block" href="#">
-        <span class="icon32 icon-red icon-user"></span>
-                        <div>Total Members</div>
-                        <div>507</div>
-                        <span class="notification">6</span>
-                    </a>
-
-                    <a data-rel="tooltip" title="4 new pro members." class="well span3 top-block"
-        href="#">
-            <span class="icon32 icon-color icon-star-on"></span>
-                        <div>Pro Members</div>
-                        <div>228</div>
-                        <span class="notification green">4</span>
-                    </a>
-
-                    <a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
-        <span class="icon32 icon-color icon-cart"></span>
-                        <div>Sales</div>
-                        <div>$13320</div>
-                        <span class="notification yellow">$34</span>
-                    </a>
-
-                    <a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
-        <span class="icon32 icon-color icon-envelope-closed"></span>
-                        <div>Messages</div>
-                        <div>25</div>
-                        <span class="notification red">12</span>
-                    </a>
-                </div>-->
                 <div class="row-fluid sortable">
                     <div class="box span12 has-overlay" style="margin-top: 0;">
                         <div data-bind="css: { disconnected: status() != 'connected' }" class="overlay"></div>
@@ -229,7 +150,6 @@
                                        title="Auto select a build when it arrives for the first time">
                                     <input data-bind="checked: $root.as" id="auto-select-latest-build" type="checkbox">
                                     Auto select</label>
-                                <!--<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>-->
                                 <a data-bind="click: refresh"
                                    href="#" class="btn btn-refresh btn-round"><i class="icon-refresh"></i></a><a href="#" class="btn btn-minimize btn-round">
                                     <i class="icon-chevron-up"></i></a>
@@ -428,41 +348,6 @@ attr: {
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <!--<div class="box-content">
-                                <h3>
-                                    Installation <small>info</small>
-                                </h3>
-                                <p>
-                                    You can scan the qr code to install it on an IOS or Android device
-            </p>
-                                <div>
-                                    <i class="icon-info-sign" style="margin-right: 5px;"></i>For Windows
-            Phone, you need to download
-                                    the xap and deploy it using 
-                                    <ul class="thumbnails" style="display: inline-block; float: right;
-            width: 30px; height: 30px;
-                                        margin: -5px 10px;">
-                                        <li id="image-1" class="thumbnail" style="width: 30px; height:
-            30px;">
-                                            <a style="width: 30px; height: 30px; background: url(http://i.msdn.microsoft.com/dynimg/IC654205.png)"
-            title="Sample Image 1"
-                                                href="http://i.msdn.microsoft.com/dynimg/IC654205.png">
-            <img style="width: 30px; height: 30px;" class="grayscale" src="http://i.msdn.microsoft.com/dynimg/IC654205.png"
-            alt="Application Deployment tool"></a>
-                                        </li>
-                                    </ul>
-                                    from Windows Phone 8 SDK.
-                                <div class="clear-fix"></div>
-                                </div>
-    
-                                <p class="center">
-                                <a href="http://usman.it/free-responsive-admin-template" class="btn btn-large
-            btn-primary"><i
-                                    class="icon-chevron-left icon-white"></i>Back to article</a>
-                                <a href="http://usman.it/free-responsive-admin-template" class="btn btn-large"><i
-            class="icon-download-alt">
-                                </i>Download Page</a>
-                            </p>-->
                     </div>
 
                     <div class="row-fluid sortable">
@@ -575,30 +460,6 @@ attr: {
 
                                 </div>
                             </div>
-                            <!--<div class="box span4 fixed-box">
-                                <div class="box-header well" data-original-title>
-                                    <h2><i class="icon-list-alt"></i>Realtime Traffic</h2>
-                                    <div class="box-icon">
-                                        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-                <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-                                    </div>
-                                </div>
-                                <div class="box-content">
-                                    <div id="realtimechart" style="height: 190px;"></div>
-                                    <p class="clearfix">
-                                        You can update a chart periodically to get a real-time effect
-                    by using a timer
-                                        to insert the new data in the plot and redraw it.
-                                    </p>
-                                    <p>
-                                        Time between updates:
-                                        <input id="updateInterval" type="text" value="" style="text-align:
-                right; width: 5em">
-                                        milliseconds
-                                    </p>
-                                </div>
-                            </div>-->
-                            <!--/span-->
                             <div class="box span4 fixed-box has-overlay">
                                 <div data-bind="css: { disconnected: status() != 'connected' }" class="overlay"></div>
                                 <div class="box-header well" data-original-title>
@@ -662,20 +523,6 @@ attr: {
 
                         <hr>
 
-                        <!--<div class="modal hide fade" id="myModal">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h3>Settings</h3>
-                            </div>
-                            <div class="modal-body">
-                                <p>Here settings can be configured...</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                                <a href="#" class="btn btn-primary">Save changes</a>
-                            </div>
-                        </div>-->
-
                         <div class="modal hide fade" id="server-logs-modal" style="width: 80%; left: 20%;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
@@ -718,9 +565,6 @@ attr: {
                 </div>
                 <!--/.fluid-container-->
 
-                <!-- external javascript
-                    ================================================== -->
-                <!-- Placed at the end of the document so the pages load faster -->
                 <!-- jQuery -->
                 <script src="js/jquery-1.11.0.min.js"></script>
                 <script>var jq = jQuery.noConflict();</script>

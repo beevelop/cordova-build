@@ -3,7 +3,7 @@
 An easy way to handle your own cordova builds without using Phonegap Build Server.
 
 
-### Please make sure your computer meet these [requirements](docs/Requirements.md)!
+### Please make sure your computer meets these [requirements](docs/Requirements.md)!
 
 # Install
 
