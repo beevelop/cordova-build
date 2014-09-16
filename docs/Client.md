@@ -18,17 +18,30 @@
     -save:<path>
 		path where the agents' results (e.g. android's apks) should be stored
 		default:none
-
+	-buildmode:<buildmode>
+		deploys app on specified platform devices / emulators
+		(argument is directly passed to cordova build command)
+		values: [debug || release || target=FOO]
+		default: release
+	-keep:<int>
+		number of temporary directories that should not be deleted
+		default:0
+		
 ## iOS-Options
 	-ios:<file.7z,file.zip>
 		platform specific file(s): zip- or 7z-archives (only for ios builds)
-	-iosprovisioningpath:"platforms/ios/build/device/your-project-name.app"
-
+	-iosprojectpath:"platforms/ios/build/device/your-project-name.app"
+		@TODO: desc
 	-iosprovisioningpath:"path-to-your-provision-file.mobileprovision"
-
+		@TODO: desc
 	-ioscodesignidentity:"your-provision-name"
-
+		@TODO: desc
 	-iosmanifesturl:"https://domain.co.uk/download.aspx?name=Info.plist&url={0}"
+		@TODO: desc
+
+	-iosskipsign:true
+		if set, the build process doesn't require signing files
+		mainly for development purposes only (currently experimental)
 
 ## WP8-Options (optional)
 	-wp8:<file.7z,file.zip>
