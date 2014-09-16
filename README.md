@@ -1,9 +1,9 @@
 # cordova-build
 
-> An easy way to handle your own cordova builds without using Phonegap Build Server.
+> A convenient way to handle your own cordova builds without relying on Phonegap Build.
 
 
-### Please make sure your computer meets the [requirements](wiki/Requirements)!
+### Please make sure your computer meets the [[requirements|Requirements]]!
 
 # Install
 
@@ -13,11 +13,11 @@
 
 `cordova-build` can run in any of the next 5 different modes:
 
-- [Server](wiki/Server)
-- [Agent](wiki/Agent)
-- [Client](wiki/Client)
-- [UI](wiki/UI)
-- [All](wiki/All)
+- [[Server]]
+- [[Agent]]
+- [[Client]]
+- UI
+- [[All]]
 
 # Credits
 
