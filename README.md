@@ -3,7 +3,7 @@
 > A convenient way to handle your own cordova builds without relying on Phonegap Build.
 
 
-### Please make sure your computer meets the [requirements](/beevelop/cordova-build/wiki/Requirements)!
+### Please make sure your computer meets the [requirements](//github.com/beevelop/cordova-build/wiki/Requirements)!
 
 # Install
 
@@ -13,11 +13,11 @@
 
 `cordova-build` can run in any of the next 5 different modes:
 
-- [Server](/beevelop/cordova-build/wiki/Server)
-- [Agent](/beevelop/cordova-build/wiki/Agent)
-- [Client](/beevelop/cordova-build/wiki/Client)
+- [Server](//github.com/beevelop/cordova-build/wiki/Server)
+- [Agent](//github.com/beevelop/cordova-build/wiki/Agent)
+- [Client](//github.com/beevelop/cordova-build/wiki/Client)
 - UI
-- [All](/beevelop/cordova-build/wiki/All)
+- [All](//github.com/beevelop/cordova-build/wiki/All)
 
 # Credits
 
