@@ -5,14 +5,13 @@
  * Copyright (c) 2013 Valéry Herlaud
  * Licensed under the MIT license.
  */
-
 var util = require('util'),
-    typer = require('proto-typer'),
-    EventEmitter = require('events').EventEmitter,
-    AdmZip = require('adm-zip'),
-    fs = require('fs-extra');
+        typer = require('proto-typer'),
+        EventEmitter = require('events').EventEmitter,
+        AdmZip = require('adm-zip'),
+        fs = require('fs-extra');
 
-module.exports = function () {
+module.exports = function() {
     define();
     return IPAFile;
 }();
@@ -28,16 +27,16 @@ function define() {
     util.inherits(IPAFile, EventEmitter);
 
     typer
-        .define(IPAFile.prototype)
-        .p('_path').nk.f
-        .u('path', getPathAccessors)
-        .p('_file').nk.f
-        .u('file', getFileAccessors)
-        .p('name').t(String).e().f
-        .p('version').t(String).e().f
-        .p('id').t(String).e().f
-        .p('team').t(String).e().f
-        .p('icon').e().f;
+            .define(IPAFile.prototype)
+            .p('_path').nk.f
+            .u('path', getPathAccessors)
+            .p('_file').nk.f
+            .u('file', getFileAccessors)
+            .p('name').t(String).e().f
+            .p('version').t(String).e().f
+            .p('id').t(String).e().f
+            .p('team').t(String).e().f
+            .p('icon').e().f;
 }
 
 /////////////////////////////
@@ -45,14 +44,13 @@ function define() {
 //    SETTERS & GETTERS    //
 //                         //
 /////////////////////////////
-
 function getPathAccessors() {
     return {
         'enumerable': true,
-        'get': function () {
+        'get': function() {
             return this._path;
         },
-        'set': function (value) {
+        'set': function(value) {
             if (this._path !== value) {
                 var oldValue = this._path;
                 this._path = value;
@@ -72,10 +70,10 @@ function getPathAccessors() {
 function getFileAccessors() {
     return {
         'enumerable': true,
-        'get': function () {
+        'get': function() {
             return this._file;
         },
-        'set': function (value) {
+        'set': function(value) {
             if (this._file !== value) {
                 this._file = value;
                 startParsing(this);
@@ -84,13 +82,11 @@ function getFileAccessors() {
     };
 }
 
-
 ///////////////////
 //               //
 //    PARSING    //
 //               //
 ///////////////////
-
 function startParsing(target) {
 
     var file = target.file,
@@ -102,12 +98,11 @@ function startParsing(target) {
                 'id': 'CFBundleIdentifier',
                 'team': 'TeamName'
             },
-    foundInfo,
+            foundInfo,
             foundProvision,
             foundIcon;
 
     for (var i = 0; i < nbrEntries; i++) {
-
         var entry = entries[i];
 
         if (!foundInfo && entry.entryName.match(/Info\.plist$/)) {
@@ -134,7 +129,6 @@ function startParsing(target) {
             break;
         }
     }
-
 }
 
 function getKey(target, key) {

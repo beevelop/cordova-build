@@ -90,6 +90,7 @@ function Server(conf) {
         }
     });
 };
+
 Server.define({
     registerBuild: function (build) {
         this.builds.push(build);
@@ -143,10 +144,11 @@ Server.define({
                         })));
                         res.send(html);
                     });
+            } else { 
+                this.socket = io.listen(this.uiHttpServer, {
+                    'destroy buffer size': Infinity
+                });
             }
-            else this.socket = io.listen(this.uiHttpServer, {
-                'destroy buffer size': Infinity
-            });
             this.socket.set('log level', 2);//show warnings
         }
         var socket = this.socket;
@@ -176,7 +178,7 @@ Server.define({
                         protocol: conf.proxyportocol || conf.protocol || 'http://',
                         host: conf.server,
                         port: conf.proxyport || conf.port,
-                        promote: conf.promote,
+                        promote: conf.promote
                     })));
                     res.send(html);
                 })
