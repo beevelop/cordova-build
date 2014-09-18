@@ -7,7 +7,6 @@ var Build = require('../lib/common/Build'),
     serverUtils = require('../lib/common/serverUtils'),
     BrowserDetect = require('../lib/common/BrowserDetect'),
     IPAFile = require('./ipa/ipa-file.js'),
-    
     path = require('path'),
     fs = require('fs-extra'),
     multiGlob = require('multi-glob'),
@@ -40,8 +39,7 @@ function Server(conf) {
                 var buildJSON;
                 try {
                     buildJSON = JSON.parse(data);
-                }
-                catch (e) {
+                } catch (e) {
                     return cb(e);
                 }
                 var build = new Build(buildJSON);
@@ -81,12 +79,14 @@ function Server(conf) {
             }
         });
         function read(async) {
-            if (async)
+            if (async) {
                 fs.readFile(path, encoding, function (err, content) {
                     cache[file] = err || content;
                     server.wwws && server.wwws.socket && server.wwws.socket.emit.defer(500, server.wwws.socket, 'reload');
                 });
-            else cache[file] = fs.readFileSync(path, encoding);
+            } else {
+                cache[file] = fs.readFileSync(path, encoding);
+            }
         }
     });
 };
@@ -133,8 +133,6 @@ Server.define({
                     'destroy buffer size': Infinity
                 });
                 this.buildServerApp
-                    .use(this.buildServerApp.router)
-                    .use(express.static(www))
                     .get('/', function (req, res) {
                         res.setHeader('Content-Type', 'text/html');
                         var html = cache['server.html'].replace('<script id="start"></script>', '<script id="start">var serverBrowser = new ServerBrowser({0});</script>'.format(JSON.stringify({
@@ -143,7 +141,8 @@ Server.define({
                             port: conf.port
                         })));
                         res.send(html);
-                    });
+                    })
+                    .use(express.static(www));
             } else { 
                 this.socket = io.listen(this.uiHttpServer, {
                     'destroy buffer size': Infinity
@@ -170,8 +169,6 @@ Server.define({
 
         if (conf.uiport) {
             this.uiApp
-                .use(this.uiApp.router)
-                .use(express.static(www))
                 .get('/', function (req, res) {
                     res.setHeader('Content-Type', 'text/html');
                     var html = cache['index.html'].replace('<script id="start"></script>', '<script id="start">var serverBrowser = new ServerBrowser({0});</script>'.format(JSON.stringify({
@@ -184,7 +181,8 @@ Server.define({
                 })
                 .get('/serve/:id/:platform?/:file?', this.serveRelease.bind(this))
                 .get('/download/:id/:platform?/:file?', this.downloadRelease.bind(this))
-                .get('/manifest/:id/:file?', this.downloadManifest.bind(this));
+                .get('/manifest/:id/:file?', this.downloadManifest.bind(this))
+                .use(express.static(www));
         }
 
         if (!uiOnly) {
