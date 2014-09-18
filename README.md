@@ -18,9 +18,13 @@ This project is currently under heavy development and might be unstable. Don't u
 `cordova-build` can run in any of the next 5 different modes:
 
 :heavy_check_mark: [Server](//github.com/beevelop/cordova-build/wiki/Server)
+
 :heavy_check_mark: [Agent](//github.com/beevelop/cordova-build/wiki/Agent)
+
 :heavy_check_mark: [Client](//github.com/beevelop/cordova-build/wiki/Client)
+
 :heavy_multiplication_x: UI
+
 :heavy_check_mark: [All](//github.com/beevelop/cordova-build/wiki/All)
 
 # Credits
