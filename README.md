@@ -1,5 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/beevelop/cordova-build/badges/gpa.svg)](https://codeclimate.com/github/beevelop/cordova-build)
-
+[![Build Status](https://travis-ci.org/beevelop/cordova-build.svg?branch=master)](https://travis-ci.org/beevelop/cordova-build)
 
 # cordova-build
 
