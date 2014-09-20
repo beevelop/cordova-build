@@ -9778,8 +9778,8 @@ if (typeof define === "function" && define.amd) {
 
 },{}],13:[function(require,module,exports){
 var ioc = require('socket.io/node_modules/socket.io-client');
-require('../../../common/utils.js');
-var Msg = require('../../../common/Msg.js');
+require('../../lib/common/utils.js');
+var Msg = require('../../lib/common/Msg.js');
 require('./qtip.js');
 var ko = require('knockout');
 var Elapsed = require('elapsed');
@@ -10142,7 +10142,7 @@ BuildVM.define({
 });
 
 
-},{"../../../common/Msg.js":1,"../../../common/utils.js":3,"./qtip.js":14,"elapsed":7,"knockout":10,"socket.io/node_modules/socket.io-client":11,"stringformat":12}],14:[function(require,module,exports){
+},{"../../lib/common/Msg.js":1,"../../lib/common/utils.js":3,"./qtip.js":14,"elapsed":7,"knockout":10,"socket.io/node_modules/socket.io-client":11,"stringformat":12}],14:[function(require,module,exports){
 !function($) {
     /* CONFIG */
 

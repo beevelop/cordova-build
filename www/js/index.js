@@ -1,6 +1,6 @@
 var ioc = require('socket.io/node_modules/socket.io-client');
 require('../../lib/common/utils.js');
-var Msg = require('../../ib/common/Msg.js');
+var Msg = require('../../lib/common/Msg.js');
 require('./qtip.js');
 var ko = require('knockout');
 var Elapsed = require('elapsed');
