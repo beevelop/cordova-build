@@ -112,14 +112,12 @@ ServerBrowser.define({
         this.socket = ioc.connect(url);
         this.socket.heartbeatTimeout = 1000; // reconnect if not received heartbeat for 20 seconds
 
-        this.socket.on({
-            'connect': this.onConnect,
-            'disconnect': this.onDisconnect,
-            'error': this.onError,
-            'status': this.onStatus,
-            'reload': this.onReload,
-            'news': this.onPartialStatus
-        }, this);
+        this.socket.on('connect', this.onConnect.bind(this));
+        this.socket.on('disconnect', this.onDisconnect.bind(this));
+        this.socket.on('error', this.onError.bind(this));
+        this.socket.on('status', this.onStatus.bind(this));
+        this.socket.on('reload', this.onReload.bind(this));
+        this.socket.on('news', this.onPartialStatus.bind(this));
     },
     'onConnect': function() {
         this.status('connected');

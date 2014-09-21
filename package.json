@@ -18,7 +18,7 @@
         "circular-json": "~0.1.6",
         "date-format-lite": "~0.5.0",
         "elapsed": "0.0.3",
-        "express": "~4.9.2",
+        "express": "~4.9.3",
         "extend": "~1.3.0",
         "fast-class": "~1.729.121805",
         "filesize": "~2.0.3",
@@ -30,7 +30,7 @@
         "npmlog": "~0.1.1",
         "proto-typer": "~0.2.2",
         "shortid": "~2.0.0",
-        "socket.io": "~0.9.0",
+        "socket.io": "~1.1.0",
         "stringformat": "0.0.5",
         "unzip": "~0.1.11",
         "whereis": "^0.4.0"
