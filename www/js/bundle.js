@@ -102,16 +102,11 @@ function rebind(obj, names) {
 }
 },{}],3:[function(require,module,exports){
 var log = console.log;
-require("date-format-lite");
+require('date-format-lite');
 require('fast-class');
 require('array-sugar');
 var Elapsed = require('elapsed'),
-        ioc = require('socket.io/node_modules/socket.io-client'),
         patch = require('./patch.js');
-
-//patch(ioc.Socket.prototype, ["on", "addListener"]);
-//patch(ioc.SocketNamespace.prototype, ["on", "addListener"]);
-//patch(ioc.EventEmitter.prototype, ["on", "addListener"]);
 
 if (typeof window != 'undefined') {
     window.global = window;
@@ -124,13 +119,15 @@ console.log = function() {
     Array.prototype.unshift.call(arguments, new Date().format("hh:mm:ss.SS"));
     log.apply(this, arguments);
 }.bind(console);
+
 var class2type = [];
 "Boolean Number String Function Array Date RegExp Object Error".split(" ").forEach(function(name) {
     class2type["[object " + name + "]"] = name.toLowerCase();
 });
 
 Object.each = function(obj, callback, context) {
-    var value, i = 0,
+    var value,
+            i = 0,
             length = obj.length,
             type = jQuery.type(obj),
             isArray = type === "array" || type !== "function" && (length === 0 || typeof length === "number" && length > 0 && (length - 1) in obj);
@@ -141,7 +138,6 @@ Object.each = function(obj, callback, context) {
         } else {
             for (i in obj) {
                 value = callback.call(context, obj[i], i, obj);
-
                 if (value === false) {
                     break;
                 }
@@ -153,16 +149,15 @@ Object.each = function(obj, callback, context) {
         } else {
             for (i in obj) {
                 value = callback.call(obj, i, obj[i], i, obj);
-
                 if (value === false) {
                     break;
                 }
             }
         }
     }
-
     return obj;
 };
+
 Object.every = function(obj, callback, context) {
     var value,
             i = 0,
@@ -176,7 +171,6 @@ Object.every = function(obj, callback, context) {
         } else {
             for (i in obj) {
                 value = callback.call(context, obj[i], i, obj);
-
                 if (value === false) {
                     return false;
                 }
@@ -188,16 +182,15 @@ Object.every = function(obj, callback, context) {
         } else {
             for (i in obj) {
                 value = callback.call(obj, i, obj[i], i, obj);
-
                 if (value === false) {
                     return false;
                 }
             }
         }
     }
-
     return true;
 };
+
 var TYPE_MAP = {
     'object': 1,
     'function': 1
@@ -229,6 +222,7 @@ Array.prototype.unique = (function() {
         return unique;
     };
 })();
+
 var splice = Array.prototype.splice;
 var defineProperties = Object.defineProperties || (Object.defineProperties = function(obj, props) {
     for (var i in props) {
@@ -274,7 +268,7 @@ defineProperties(Function.prototype, {
         }
     }
 });
-},{"./patch.js":2,"array-sugar":4,"date-format-lite":5,"elapsed":6,"fast-class":8,"socket.io/node_modules/socket.io-client":11}],4:[function(require,module,exports){
+},{"./patch.js":2,"array-sugar":4,"date-format-lite":5,"elapsed":6,"fast-class":8}],4:[function(require,module,exports){
 (function (arr) {
 	function isNumber(n) {
 		return !isNaN(parseFloat(n)) && isFinite(n);	//thx to http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
@@ -12101,7 +12095,7 @@ function isBuf(obj) {
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],51:[function(require,module,exports){
 module.exports=require(44)
-},{"/home/neoslix/Repos/cordova-build/node_modules/socket.io/node_modules/socket.io-client/node_modules/has-binary/node_modules/isarray/index.js":44}],52:[function(require,module,exports){
+},{"C:\\Users\\HUMMEM\\cordova-build\\node_modules\\socket.io\\node_modules\\socket.io-client\\node_modules\\has-binary\\node_modules\\isarray\\index.js":44}],52:[function(require,module,exports){
 /*! JSON v3.2.6 | http://bestiejs.github.io/json3 | Copyright 2012-2013, Kit Cambridge | http://kit.mit-license.org */
 ;(function (window) {
   // Convenience aliases.
@@ -13176,6 +13170,12 @@ ServerBrowser.define({
         this.socket.on('status', this.onStatus.bind(this));
         this.socket.on('reload', this.onReload.bind(this));
         this.socket.on('news', this.onPartialStatus.bind(this));
+        this.socket.on('reconnecting', function(attempt) {
+            console.log("Reconnecting, attempt #"+attempt);
+        }.bind(this));
+        this.socket.on('reconnect', function(attempt) {
+            console.log("UI successfully reconnected on attempt #"+attempt);
+        }.bind(this));
     },
     'onConnect': function() {
         this.status('connected');
@@ -13193,21 +13193,7 @@ ServerBrowser.define({
         this.logs.map = {};
     },
     'onError': function(err) {
-        if (err && (err.code == 'ECONNREFUSED' || err.indexOf && err.indexOf('ECONNREFUSED') >= 0)) {
-            if (!this._reconnecting) {
-                var self = this;
-                this._reconnecting = function() {
-                    self.socket.reconnect();
-                }.defer(500);
-                self.socket.on('connect', function() {
-                    clearTimeout(self._reconnecting);
-                    self._reconnecting = 1;
-                    self.socket.removeListener('connect', arguments.callee);
-                });
-            }
-        }
-        else
-            console.log('Agent Worker socket reported error:', err);
+        console.log('Agent Worker socket reported error:', err);
     },
     'onReload': function() {
         location.reload();

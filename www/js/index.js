@@ -118,6 +118,12 @@ ServerBrowser.define({
         this.socket.on('status', this.onStatus.bind(this));
         this.socket.on('reload', this.onReload.bind(this));
         this.socket.on('news', this.onPartialStatus.bind(this));
+        this.socket.on('reconnecting', function(attempt) {
+            console.log("Reconnecting, attempt #"+attempt);
+        }.bind(this));
+        this.socket.on('reconnect', function(attempt) {
+            console.log("UI successfully reconnected on attempt #"+attempt);
+        }.bind(this));
     },
     'onConnect': function() {
         this.status('connected');
@@ -135,21 +141,7 @@ ServerBrowser.define({
         this.logs.map = {};
     },
     'onError': function(err) {
-        if (err && (err.code == 'ECONNREFUSED' || err.indexOf && err.indexOf('ECONNREFUSED') >= 0)) {
-            if (!this._reconnecting) {
-                var self = this;
-                this._reconnecting = function() {
-                    self.socket.reconnect();
-                }.defer(500);
-                self.socket.on('connect', function() {
-                    clearTimeout(self._reconnecting);
-                    self._reconnecting = 1;
-                    self.socket.removeListener('connect', arguments.callee);
-                });
-            }
-        }
-        else
-            console.log('Agent Worker socket reported error:', err);
+        console.log('Agent Worker socket reported error:', err);
     },
     'onReload': function() {
         location.reload();
