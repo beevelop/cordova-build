@@ -1,0 +1,25 @@
+.agents {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+.agents .agent {
+  list-style: none;
+  display: inline-block;
+  white-space: nowrap;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  min-width: 160px;
+}
+.agents .agent .agent_meta {
+  display: inline-block;
+  white-space: nowrap;
+}
+.agents .agent .agent_img {
+  display: inline-block;
+  vertical-align: top;
+}
+.agents .agent label {
+  margin: 0;
+  padding: 0;
+}

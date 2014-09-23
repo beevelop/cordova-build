@@ -217,17 +217,22 @@ table.tablesorter thead tr th:hover {
   display: block;
   padding: 0;
   margin: 0;
-  min-width: 200px;
-  padding: 5px;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 .agents .agent {
   list-style: none;
   display: inline-block;
   white-space: nowrap;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  min-width: 160px;
+}
+.agents .agent .agent_meta {
+  display: inline-block;
+  white-space: nowrap;
 }
 .agents .agent .agent_img {
-  margin-right: 5px;
+  display: inline-block;
+  vertical-align: top;
 }
 .agents .agent label {
   margin: 0;

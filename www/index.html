@@ -130,20 +130,21 @@
                                         attr: {
                                             alt: $data.platform || $data, src: $data.qr || ('img/platforms/' + ($data.platform || $data) + '.png')
                                         }"
-                                        class="pull-left agent_img" width="40">
+                                        class="agent_img" width="40">
                                     <!--/ko-->
                                     <!--</a>-->
-                                    <span data-bind="text: unwrap($data.conf && $data.conf.name || $data.name) || id"></span>
-                                    <span class="label label-success"
-                                          data-bind="cls: 'label-' + unwrap($data.status), text: unwrap($data.statusText || $data.status)"></span>
-                                    <br />
-                                    <label>Since:</label>
-                                    <span datetime-format="{0} ago"
-                                          data-bind="attr: {
-                                                datetime: $data.since,
-                                                title: unwrap($data.since) &&
-                                                    new Date(unwrap($data.since)).format('DD MMM YYYY hh:mm:ss') || $data.since
-                                            }, text: unwrap($data.since) && (new Date(unwrap($data.since)).elapsed())"></span>
+                                    <span class="agent_meta">
+                                        <span data-bind="text: unwrap($data.conf && $data.conf.name || $data.name) || id"></span>
+                                        <span class="label label-success"
+                                              data-bind="cls: 'label-' + unwrap($data.status), text: unwrap($data.statusText || $data.status)"></span>
+                                        <br />
+                                        <span datetime-format="{0} ago"
+                                              data-bind="attr: {
+                                                    datetime: $data.since,
+                                                    title: unwrap($data.since) &&
+                                                        new Date(unwrap($data.since)).format('DD MMM YYYY hh:mm:ss') || $data.since
+                                                }, text: unwrap($data.since) && (new Date(unwrap($data.since)).elapsed())"></span>
+                                    </span>
                                 </li>
                             </script>
                             <!-- /Connected Agents -->
