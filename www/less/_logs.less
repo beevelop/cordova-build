@@ -1,0 +1,44 @@
+.logs {
+    h1 {
+        margin: 0 0 15px 0;
+    }
+}
+
+.log {
+    font-family: monospace;
+    max-width: 100%;
+    overflow-x: auto;
+    clear: both;
+    padding: 1%;
+    box-sizing: border-content;
+    background-color: #f3f3f3;
+    span {
+        white-space: pre;
+    }
+
+    .p {
+        color: #218c93; /*unknown priority*/
+    }
+    .p6 {
+        color: #aaa; /*debug*/
+    }
+    .p5 {
+        color: #2b86ca; /*build output*/
+    }
+    .p4 {
+        color: #000; /*info*/
+    }
+    .p3 {
+        color: #7d4382; /*status*/
+    }
+    .p2 {
+        color: #a4822c; /*warning*/
+    }
+    .p1 {
+        color: #e61414; /*error*/
+    }
+    .br:after {
+        content: '\000A';
+        white-space: pre;
+    }
+}

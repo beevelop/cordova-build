@@ -53,15 +53,15 @@ function ServerBrowser(conf) {
         var build = selectedBuild();
         var tab = selectedTab();
         //console.error("TAB", tab, build && build.id, build);
-        if (tab == '#noBuild')
+        if (tab == '#noBuild') {
             tab = initialTab;
+        }
         tab = tab.substr(1);
         if (build && tab != "info" && !build.conf.platform.findOne(function(platform) {
             return platform == tab;
         })) {
             selectedTab("#info");
-        }
-        else if (build) {
+        } else if (build) {
             //console.error(tab);
             location.href = build && '#view/' + build.id + '/' + tab || "/";
         }

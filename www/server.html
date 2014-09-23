@@ -1,222 +1,448 @@
-﻿<!DOCTYPE html >
-<html lang="en" style="height: 100%">
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <!--
-        Charisma v1.0.0 Copyright 2012 Muhammad Usman Licensed under the Apache License v2.0 http://www.apache.org/licenses/LICENSE-2.0 http://usman.it http://twitter.com/halalit_usman
-        -->
         <meta charset="utf-8">
-        <title>Cordova Build Server</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="DotNetWise">
-        <!-- The styles -->
-        <script id="bs-js"> (function(d) {
-                var t, e = d.createElement('link'), pairs = d.cookie.split('; '), decode = decodeURIComponent;
-                for (var i = 0, pair; pair = pairs[i] && pairs[i].split('='); i++) {
-                    if (decode(pair[0]) === 'current_theme') {
-                        t = decode(pair[1] || ''); // IE saves cookies with empty string as "c; ", e.g. without "=" as opposed to EOMB, thus pair[1] may be undefined
-                        break;
-                    }
-                }
-                t = t || 'spacelab';
-                e.id = 'bs-css';
-                e.rel = 'stylesheet';
-                e.href = 'css/bootstrap-' + t + '.css';
-                window.current_theme = t;
-                d.head.insertBefore(e, d.getElementById('bs-js'));
-                d.documentElement.className += ' theme-' + t + ' ';
-            })(document);</script>
-        <link href="css/app.css" rel="stylesheet">
-        <link href="css/bootstrap-responsive.css" rel="stylesheet">
-        <link href="css/charisma-app.css" rel="stylesheet">
-        <link href="css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
-        <link href='css/fullcalendar.css' rel='stylesheet'>
-        <link href='css/fullcalendar.print.css' rel='stylesheet' media='print'>
-        <link href='css/chosen.css' rel='stylesheet'>
-        <link href='css/uniform.default.css' rel='stylesheet'>
-        <link href='css/colorbox.css' rel='stylesheet'>
-        <link href='css/jquery.cleditor.css' rel='stylesheet'>
-        <link href='css/jquery.noty.css' rel='stylesheet'>
-        <link href='css/noty_theme_default.css' rel='stylesheet'>
-        <link href='css/elfinder.min.css' rel='stylesheet'>
-        <link href='css/elfinder.theme.css' rel='stylesheet'>
-        <link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
-        <link href='css/opa-icons.css' rel='stylesheet'>
-        <link href='css/uploadify.css' rel='stylesheet'>
+        <title>Cordova Build UI</title>
 
-        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-              <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-            <![endif]-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-        <!-- The fav icon -->
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <script id="tplLog" type="text/html">
-        <span data-bind="
-    text: unwrap($data && $data.date) && !isNaN(new Date(unwrap($data && $data.date)).getTime()) && new Date(unwrap($data && $data.date)).format('mm:ss.SS ') || '          ',
-    attr: {
-        title: unwrap($data && $data.date) && new Date(unwrap($data && $data.date)).format('hh:mm:ss.S, DD MMM YYYY')
-    }"
-              class="time"></span><span data-bind="
-    css: 'p' + priority,
-    text: ($data && $data.toString(true) || '').replace(/\n/g, '\n          ')"
-              class="br"></span>
-    </script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-</head>
-
-<body style="min-height: 100%; box-sizing: border-box;padding-bottom: 40px;">
-    <footer style="position: absolute;bottom: 0; right:0; left: 0; ">
-        <p class="pull-left">
-            <a href="http://www.dotnetwise.com" target="_blank">DotNetWise</a> 2014
-        </p>
-        <p class="pull-right">
-            Design template by: <a target="_blank" href="http://usman.it/free-responsive-admin-template">Charisma</a>
-        </p>
-    </footer>
-    <!-- topbar starts -->
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <a class="brand" href="/" style="width: auto">
-                    <img alt="Cordova build" src="img/logo20.png" />
-                    <span>Cordova Build SERVER</span></a>
-                <div style="display: block; margin-top: 0; float: left;">
-                    <ul data-bind="visible: status() != 'connected'" class="breadcrumb" style="display: inline;
-                        padding: 0; margin: 0; border: 0 none;">
-                        <li data-bind="visible: status() == 'disconnected'" class="alert alert-warning" style="margin: 0">
-                            <strong>Disconnected!</strong> We are attempting to automatically reconnect to the server...
-                            <span data-bind="attr: { datetime: disconnectedSince, title: disconnectedSince() && disconnectedSince().format('DD MMM YYYY hh:mm:ss') }, text: disconnectedSince() && disconnectedSince().elapsed()"
-                                  datetime-format="since {0} ago"></span>
-                        </li>
-                        <li data-bind="visible: status() == 'connecting'" class="alert alert-info">
-                            <strong>Connecting...</strong>
-                        </li>
-                    </ul>
+    </head>
+    <body>
+        <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">            
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/logo.png" height="40" alt="Logo" />
+                        Cordova Build UI
+                    </a>
+                    <a href="#server_logs" data-toggle="collapse" data-target="#server_logs" class="pull-left navbar-brand">
+                        <i class="fa fa-file-text-o"></i> Logs 
+                        <span class="badge badge-info" data-bind="text: unwrap($data.logs).length"></span>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- topbar ends -->
-    <div class="container-fluid" style="position: relative;">
-        <div class="row-fluid">
-            Cordova Build Server is listening on port: <span data-bind="text: conf.port"></span>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-            <noscript>
-            <div class="alert alert-block span10">
-                <h4 class="alert-heading">Warning!</h4>
-                <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
-            </div>
-            </noscript>
+                    <div class="nav navbar-nav side-nav">
+                        <ul data-bind="template: { name: 'tplBuildListItem', foreach: $data && $data.builds }" class="builds nav">
+                            <li class="list-group-item-warning list-group-item" data-bind="visible: !$data || !(unwrap($data.builds).length)">
+                                No builds have been done yet.
+                            </li>
+                        </ul>
 
-            <div id="content" class="span12 no-gutter"></div>
+                        <script type="text/html" id="tplBuildListItem">
 
-            <hr>
+                            <li data-bind="with: $data, css: { 'active': unwrap($parent.selectedBuild) && unwrap($parent.selectedBuild).id == $data.id }" class="build">
+                                <a data-bind="
+                                    attr: {
+                                        href: ['#view/', unwrap(id), $data.platform ? '/' : '', $data.platform ? unwrap($data.platform) : ''].join(''),
+                                    },
+                                    click: function (build) { $parents[1].selectedBuild(build.master || build); $parents[1].selectedBuild.tab('#' + build.platform()); }">
+                                    <img data-bind="
+                                        css: { grayscale: status() != 'success', spin: status() == 'building' || status() == 'uploading' },
+                                        attr: {
+                                            alt: $data.platform,
+                                            rel: (unwrap(qr) || '').indexOf('data:') + 1 ? qr : null,
+                                            title: $('#encoder').text([unwrap($data.platform), ' #', $data.conf && $data.conf.number || unwrap(id), ' ', unwrap(status) == 'success' ? '' : unwrap(status)].join('')).html(),
+                                            src: ('img/platforms/' + unwrap($data && $data.platform || $data) + '.png'),
+                                            alt: $data.platform
+                                        }" class="platform" />
+                                </a>
 
-            <div class="modal hide fade" id="server-logs-modal" style="width: 80%; left: 20%;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>Server logs</h3>
-                </div>
-                <div class="modal-body">
-                    <div data-bind="visible: status() == 'disconnected'" class="alert alert-warning">
-                        <strong>Disconnected!</strong> We are attempting to automatically reconnect to the server...
-                        <span data-bind="attr: { datetime: disconnectedSince, title: disconnectedSince() && disconnectedSince().format('DD MMM YYYY hh:mm:ss') }, text: disconnectedSince() && disconnectedSince().elapsed()"
-                              datetime-format="since {0} ago"></span>
-                    </div>
-                    <div data-bind="visible: status() != 'disconnected'">
-                        <div data-bind="visible: !$data || !unwrap($data.logs).length,
-    text: 'Nothing to show yet'"
-                             class="box-content log">
-                            Nothing to show yet
+                                <dl class="specs report">
+                                    <dd class="name">
+                                        <a data-bind="
+                                            click: function (build) { $parents[1].selectedBuild(build.master || build); $parents[1].selectedBuild.tab('#info'); },
+                                            attr: {
+                                                href: '#view/' + unwrap(id) + '/' + unwrap($data.platform),
+                                            },">
+                                            <span data-bind="text: '#'+(unwrap(conf.number) || unwrap(id))" class="build-id"></span>
+                                        </a>
+                                    </dd>
+                                    <dd class="since">
+                                        <span datetime-format="{0} ago" data-bind="
+                                            text: '{0} ago{1}'.format(unwrap($data && $data.started) && unwrap($data && $data.started).elapsed() || 'moments', unwrap($data && $data.duration) && (', ('+ unwrap($data.duration) + ')')),
+                                            attr: {
+                                            datetime: $data && $data.started,
+                                            title: [(unwrap($data && $data.started) && unwrap($data && $data.started).format
+                                                && ('Started:       ' + unwrap($data && $data.started).format('DD MMM YYYY hh:mm:ss'))),
+                                                (unwrap($data && $data.completed) && unwrap($data && $data.completed).format
+                                                && ('\nCompleted: ' + unwrap($data && $data.completed).format('DD MMM YYYY hh:mm:ss'))),
+                                                (unwrap($data && $data.duration)
+                                                && ('\nDuration: ' + unwrap($data && $data.duration))),
+                                            ].join('')
+                                        }">
+                                        </span>
+                                    </dd>
+                                    <dd class="status">
+                                        <label>Status:</label>
+                                        <span data-bind="css: 'label-' + unwrap($data.status), text: unwrap($data.statusText) || unwrap($data.status)" class="label"></span>
+                                    </dd>
+                                </dl>
+                            </li>
+                            </script>
+
+                            <!-- <ul class="nav navbar-nav side-nav">
+                                <li class="active"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard</a></li>
+                                <li><a href="portfolio.html"><i class="fa fa-tasks"></i> Portfolio</a></li>                    
+                                <li><a href="blog.html"><i class="fa fa-globe"></i> Blog</a></li>
+                                <li><a href="forms.html"><i class="fa fa-list-ol"></i> Forms</a></li>
+                                <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
+                                <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
+                                <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i > Bootstrap Grid</a></li>                    
+                            </ul>-->
                         </div>
+                    
+                        <ul class="nav navbar-nav navbar-right navbar-user">
+                            <li data-bind="visible: status() == 'disconnected'" class="connection alert alert-warning">
+                                <strong>Disconnected!</strong> We are attempting to automatically reconnect to the server...
+                                <span data-bind="attr: { datetime: disconnectedSince, title: disconnectedSince() && disconnectedSince().format('DD MMM YYYY hh:mm:ss') }, text: disconnectedSince() && disconnectedSince().elapsed()"
+                                      datetime-format="since {0} ago"></span>
+                            </li>
+                            <li data-bind="visible: status() == 'connecting'" class="connection alert alert-info">
+                                <strong>Connecting...</strong>
+                            </li>
+                            
+                            <!-- Connected Agents -->
+                            <li data-bind="visible: !$data || !(unwrap($data.agents).length)" class="connection alert alert-info">
+                                No build agents are connected.
+                            </li>
+                            <ul data-bind="template: { name: 'tplAgentItem', foreach: $data && $data.agents }" class="agents"></ul>
+                            <script type="text/html" id="tplAgentItem">
+                                <li data-bind="with: $data" class="agent">
+                                    <!--<a href="#">-->
+                                    <!--ko foreach: platforms-->
+                                    <img data-bind="
+                                        css: {
+                                            spin: unwrap($parent.buildingPlatform) == unwrap($data && $data.platform || $data)
+                                        },
+                                        attr: {
+                                            alt: $data.platform || $data, src: $data.qr || ('img/platforms/' + ($data.platform || $data) + '.png')
+                                        }"
+                                        class="pull-left agent_img" width="40">
+                                    <!--/ko-->
+                                    <!--</a>-->
+                                    <span data-bind="text: unwrap($data.conf && $data.conf.name || $data.name) || id"></span>
+                                    <span class="label label-success"
+                                          data-bind="cls: 'label-' + unwrap($data.status), text: unwrap($data.statusText || $data.status)"></span>
+                                    <br />
+                                    <label>Since:</label>
+                                    <span datetime-format="{0} ago"
+                                          data-bind="attr: {
+                                                datetime: $data.since,
+                                                title: unwrap($data.since) &&
+                                                    new Date(unwrap($data.since)).format('DD MMM YYYY hh:mm:ss') || $data.since
+                                            }, text: unwrap($data.since) && (new Date(unwrap($data.since)).elapsed())"></span>
+                                </li>
+                            </script>
+                            <!-- /Connected Agents -->
+
+                            <!--<li class="dropdown messages-dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">2</span> <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">2 New Messages</li>
+                                    <li class="message-preview">
+                                        <a href="#">
+                                            <span class="avatar"><i class="fa fa-bell"></i></span>
+                                            <span class="message">Security alert</span>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="message-preview">
+                                        <a href="#">
+                                            <span class="avatar"><i class="fa fa-bell"></i></span>
+                                            <span class="message">Security alert</span>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Go to Inbox <span class="badge">2</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown user-dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+                                </ul>
+                            </li>-->
+                        </ul>
                     </div>
-                    <div data-bind="
-    hidden: !$data || !unwrap($data.logs).length,
-    template: { foreach: $data && $data.logs, name: 'tplLog' }"
-                         class="log">
+                </nav>
+
+                <div id="page-wrapper">
+                    <!--<div class="row">
+                        <div class="col-lg-12">
+                            <h1>Dashboard <small>Dashboard Home</small></h1>
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                Welcome to the admin dashboard! Feel free to review all pages and modify the layout to your needs. 
+                                For the purpose of data visualization, additional widgets are used, so make sure you review all provided information.
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <!-- Logs -->
+                    <div class="logs collapse" id="server_logs">
+                        <h1><i class="fa fa-file-text-o"></i> Server-Logs</h1>
+                        <script id="tplLog" type="text/html">
+                            <span data-bind="
+                            text: unwrap($data && $data.date) && !isNaN(new Date(unwrap($data && $data.date)).getTime()) && new Date(unwrap($data && $data.date)).format('mm:ss.SS ') || '          ',
+                            attr: {
+                                title: unwrap($data && $data.date) && new Date(unwrap($data && $data.date)).format('hh:mm:ss.S, DD MMM YYYY')
+                            }" class="time"></span>
+                            <span class="br" data-bind="
+                            css: 'p' + priority,
+                            text: ($data && $data.toString(true) || '').replace(/\n/g, '\n          ')"></span>
+                        </script>
+                        <div class="log col-lg-12" data-bind="
+                            hidden: !$data || !unwrap($data.logs).length,
+                            template: { foreach: $data && $data.logs, name: 'tplLog' }">
+                        </div>
+                        <p>&nbsp;</p>
                     </div>
+                    <!-- /Logs -->
+                    
+                    <div class="row">
+                        <div>
+
+                            <ul class="nav nav-tabs" id="selectedBuildTab">
+                                <li class="active" data-bind="hidden: !selectedBuild() ? selectedBuild.tab('#noBuild')
+                                        && false : (selectedBuild.tab() == '#noBuild' && selectedBuild.tab(initialTab) || true), css: {
+                                        active:
+                                        selectedBuild.tab() == '#noBuild'
+                                        }">
+                                    <a data-bind="click: function (data) {selectedBuild.tab('#noBuild');},"
+                                       href="#noBuild">General</a>
+                                </li>
+                                <li data-bind="visible: selectedBuild, css: {active: selectedBuild.tab() == '#info'}"
+                                    class="active" style="display: none">
+                                    <a data-bind="click: function (data) {selectedBuild.tab('#info');}" href="#info">General</a>
+                                </li>
+                                <!-- ko foreach: selectedBuild() && selectedBuild().platforms-->
+                                <li data-bind="
+                                    attr: {
+                                    title: [unwrap($data.platform), ' #', conf && conf.number || unwrap(id), ' &lt;span class=\'label label-{0}\'&gt;{0}&lt;/label&gt;'.format(unwrap(status) == 'success' ? '' : unwrap(status))].join(''),
+                                    },
+                                    css: { active: $parent.selectedBuild.tab() == '#' + unwrap($data && $data.platform) }"
+                                    class="tab-icon preview">
+                                    <a data-bind=" click: function (data) {
+                                        $parent.selectedBuild.tab('#'
+                                        + unwrap($data && $data.platform));
+                                        }, attr: { href: '#' + unwrap($data && $data.platform) }">
+                                        <img class="platform pull-left" height="24" data-bind="
+                                                attr: {
+                                                src: 'img/platforms/' + unwrap($data && $data.platform) + '.png',
+                                                title: $data && $data.platform,
+                                                }" />&nbsp;
+                                        
+                                        <span data-bind="text: $root.platformNames[unwrap($data.platform)]"></span>
+                                        <i data-bind="visible: unwrap($data && $data.status) == 'success'" class="fa fa-check"></i>
+                                        <i data-bind="visible: unwrap($data && $data.status) == 'failed'" class="fa fa-cross"></i>
+                                        <i data-bind="visible: unwrap($data && $data.status) == 'queued'" class="fa fa-times-circle"></i>
+                                        <i data-bind="visible: unwrap($data && $data.status) == 'building'" class="fa fa-repeat fa-spin"></i>
+                                        <i data-bind="visible: unwrap($data && $data.status) == 'uploading'" class="fa fa-upload"></i>
+                                    </a>
+                                </li>
+                                <!-- /ko-->
+                            </ul>
+
+                            <div id="selectedBuildTabContent" class="tab-content">
+                                <div data-bind="hidden: selectedBuild" class="tab-pane active" id="noBuild">
+                                    <img class="no-build" alt="no-build" src="img/platforms/no-build.png" />
+                                    <span data-bind="visible: $root.status() == 'connecting'">Connecting and loading data</span>
+                                    <span data-bind="visible: $root.status() == 'connected'">No build has been run yet</span>
+                                </div>
+                                <script id="tplLastBuild" type="text/html">
+                                    <ul class="build-actions pull-right">
+                                        <li data-bind="visible: status() == 'cancelled' || status() == 'failed' || status() == 'success',">
+                                            <button
+                                                data-bind="click: $root.rebuild.bind($root)" 
+                                                class="btn btn-small btn-primary">
+                                                Rebuild?
+                                            </button>
+                                        </li>
+                                        <li data-bind="visible: status() != 'cancelled' && status() != 'failed' && status() != 'success',">
+                                            <button 
+                                                data-bind="click: $root.cancel.bind($root)" 
+                                                class="btn btn-small btn-danger">
+                                                Cancel?
+                                            </button>
+                                        </li>
+                                        <li data-bind="visible: status() == 'success' && $root.conf.promote,">
+                                            <a data-bind="attr: {href: $root.promote($data),}" 
+                                               class="btn btn-small btn-success" 
+                                               target="_blank">
+                                                Promote?
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="row-fluid">
+                                        <div class="build-qr">
+                                            <a style="display: block;" data-bind="
+                                                attr: {
+                                                href: unwrap($data && $data.status) == 'success' ? ['/download/', unwrap(id), typeof unwrap($data.platform) == 'string' ? '/' : '', typeof unwrap($data.platform) == 'string' ? unwrap($data.platform) : ''].join('') : null,
+                                                },
+                                               ">
+                                                <img data-bind="attr: {src: unwrap(qr)}" class="qr pull-left" alt="QR" width="124" />
+                                            </a>
+                                            <a style="display: block;" data-bind="
+                                                visible: typeof unwrap($data.platform) == 'string',
+                                                attr: {
+                                                href: unwrap($data && $data.status) == 'success' ? encodeURIComponent(['/download/', unwrap(id), typeof unwrap($data.platform) == 'string' ? '/' : '', typeof unwrap($data.platform) == 'string' ? unwrap(platform) : '', '/qr'].join('')) : null,
+                                                },
+                                               ">
+                                            </a>
+                                        </div>
+                                        <div class="span2 build-report no-gutter build-info">
+                                            <dl class="build-status report">
+                                                <dd class="name">
+
+                                                    <b><h3 data-bind="
+attr: {
+title: ($data.conf.number && $data.conf.number && ('Release number: ' + $data.conf.number && $data.conf.number + '\n') || '')
++ 'Build id: #' + ($data.id || $parent && $parent.id || $parents[1]
+    && $parents[1].id || $parents[2] && $parents[2].id)
+},
+text: '#' + ($data.conf && $data.conf.number || $data.id || $parent && $parent.id || $parents[1]
+                                && $parents[1].id || $parents[2] && $parents[2].id)"
+                                                           href="#"></h3></b>
+                                                </dd>
+                                                <dd class="status">
+                                                    <label>Status:</label>
+                                                    <span class="label"
+                                                          data-bind="css: 'label-'+ unwrap($data.status), text: unwrap($data.statusText) || unwrap($data.status)">
+                                                    </span>
+                                                </dd>
+
+                                                <dd class="started">
+
+                                                    <label>Started:</label>
+                                                    <span datetime-format="{0} ago" data-bind="
+                                                        text: '{0} ago'.format(unwrap($data && $data.started) && unwrap($data && $data.started).elapsed()),
+                                                        attr: {
+                                                        datetime: $data && $data.started,
+                                                        title: (unwrap($data && $data.started) && unwrap($data && $data.started).format
+                                                        && ('Started:       ' + unwrap($data && $data.started).format('DD MMM YYYY hh:mm:ss'))) +
+                                                        (unwrap($data && $data.completed) && unwrap($data && $data.completed).format
+                                                        && ('\nCompleted: ' + unwrap($data && $data.completed).format('DD MMM YYYY hh:mm:ss')))
+                                                    }"></span>
+                                                </dd>
+                                                <dd data-bind="visible: $data && $data.duration" class="duration">
+
+                                                    <label>Duration:</label><span
+                                                        data-bind="text: $data && $data.duration"></span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        
+                                        <div data-bind="template: { foreach: $data && $data.logs, name: 'tplLog' }"
+                                             class="log">
+                                        </div>
+                                    </div>
+                                    </script>
+                                    <div data-bind="visible: selectedBuild, css: { active: selectedBuild.tab() == '#info' }"
+                                         class="tab-pane"
+                                         id="info">
+                                        <!--ko with: selectedBuild-->
+                                        <!--ko template: { name: 'tplLastBuild', data: $data }-->
+                                        <!--/ko-->
+                                        <!--/ko-->
+                                    </div>
+                                    <!--ko with: selectedBuild-->
+                                    <!--ko foreach: platforms-->
+                                    <div class="tab-pane" 
+                                         data-bind="attr: { id: $data.platform }, 
+                                                    css: {active: $parents[1].selectedBuild.tab() == '#' + unwrap(platform)}">
+                                        <!--ko template: { name: 'tplLastBuild', data: $data} -->
+                                        <!--/ko-->
+                                    </div>
+                                    <!--/ko-->
+                                    <!--/ko-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-lg-3">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><i class="fa fa-clock-o"></i>Alerts</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row alert-success">
+                                            <div class="col-xs-5">
+                                                <i class="fa fa-thumbs-o-up fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <p class="alerts-heading">343</p>
+                                                <p class="alerts-text">New Orders</p>
+                                            </div>
+                                        </div>
+                                        <div class="row alert-success">
+                                            <div class="col-xs-5">
+                                                <i class="fa fa-thumbs-o-up fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <p class="alerts-heading">1256</p>
+                                                <p class="alerts-text">Registrations</p>
+                                            </div>
+                                        </div>
+                                        <div class="row alert-danger">
+                                            <div class="col-xs-5">
+                                                <i class="fa fa-thumbs-o-down fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <p class="alerts-heading">4</p>
+                                                <p class="alerts-text">Errors</p>
+                                            </div>
+                                        </div>
+                                        <div class="row alert-success">
+                                            <div class="col-xs-5">
+                                                <i class="fa fa-thumbs-o-up fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                <p class="alerts-heading">11</p>
+                                                <p class="alerts-text">Mentions</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Estimations for last 30 days</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="shieldui-chart1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <!-- /#page-wrapper -->
                 </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn" data-dismiss="modal">Close</a>
-                    <!--<a href="#" class="btn btn-primary">Save changes</a>-->
-                </div>
-            </div>
-        </div>
-    </div>
+                <!-- /#wrapper -->
 
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script>var jq = jQuery.noConflict();</script>
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <!-- library for cookie management -->
-    <script src="js/jquery.cookie.js"></script>
-    <!-- jQuery UI -->
-    <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
-    <!-- transition / effect library -->
-    <script src="js/bootstrap-transition.js"></script>
-    <!-- alert enhancer library -->
-    <script src="js/bootstrap-alert.js"></script>
-    <!-- modal / dialog library -->
-    <script src="js/bootstrap-modal.js"></script>
-    <!-- custom dropdown library -->
-    <script src="js/bootstrap-dropdown.js"></script>
-    <!-- scrolspy library -->
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <!-- library for creating tabs -->
-    <script src="js/bootstrap-tab.js"></script>
-    <!-- library for advanced tooltip -->
-    <script src="js/bootstrap-tooltip.js"></script>
-    <!-- popover effect library -->
-    <script src="js/bootstrap-popover.js"></script>
-    <!-- button enhancer library -->
-    <script src="js/bootstrap-button.js"></script>
-    <!-- accordion library (optional, not used in demo) -->
-    <script src="js/bootstrap-collapse.js"></script>
-    <!-- carousel slideshow library (optional, not used in demo) -->
-    <script src="js/bootstrap-carousel.js"></script>
-    <!-- autocomplete library -->
-    <script src="js/bootstrap-typeahead.js"></script>
-    <!-- tour library -->
-    <script src="js/bootstrap-tour.js"></script>
-    <!-- calander plugin -->
-    <script src='js/fullcalendar.min.js'></script>
-    <!-- data table plugin -->
-    <script src='js/jquery.dataTables.min.js'></script>
+                <!-- <script src="js/jquery-2.1.1.min.js"></script> -->
+                <script src="js/jquery.cookie.js"></script>
+                <script src="js/qr-js/qr.min.js"></script>
+                <script src="js/bundle.js"></script>
 
-    <!-- chart libraries start -->
-    <script src="js/excanvas.js"></script>
-    <script src="js/jquery.flot.min.js"></script>
-    <script src="js/jquery.flot.pie.min.js"></script>
-    <script src="js/jquery.flot.stack.js"></script>
-    <script src="js/jquery.flot.resize.min.js"></script>
-    <!-- chart libraries end -->
+                <script id="start">var serverBrowser = new ServerBrowser({"protocol":"http://", "host":"localhost", "port":8300});</script>
 
-    <!-- select or dropdown enhancer -->
-    <script src="js/jquery.chosen.min.js"></script>
-    <!-- checkbox, radio, and file input styler -->
-    <script src="js/jquery.uniform.min.js"></script>
-    <!-- plugin for gallery image view -->
-    <script src="js/jquery.colorbox.min.js"></script>
-    <!-- rich text editor library -->
-    <script src="js/jquery.cleditor.min.js"></script>
-    <!-- notification plugin -->
-    <script src="js/jquery.noty.js"></script>
-    <!-- file manager library -->
-    <script src="js/jquery.elfinder.min.js"></script>
-    <!-- star rating plugin -->
-    <script src="js/jquery.raty.min.js"></script>
-    <!-- for iOS style toggle switch -->
-    <script src="js/jquery.iphone.toggle.js"></script>
-    <!-- autogrowing textarea plugin -->
-    <script src="js/jquery.autogrow-textarea.js"></script>
-    <!-- multiple file upload plugin -->
-    <script src="js/jquery.uploadify-3.1.min.js"></script>
-    <!-- history.js for cross-browser state change on ajax -->
-    <script src="js/jquery.history.js"></script>
-    <!-- application script for Charisma demo -->
-    <script src="js/charisma.js"></script>
-    <script src="js/qr-js/qr.min.js"></script>
-
-    <script src="js/bundle.js"></script>
-    <script id="start"></script>
-</body>
-</html>
+            </body>
+        </html>

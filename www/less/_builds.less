@@ -1,0 +1,37 @@
+.builds {
+    .build {
+        box-sizing: border-box;
+        padding: 4%;
+        overflow: hidden;
+        position: relative;
+
+        img.platform {
+            float: left;
+            max-width: 64px;
+            margin-right: 5px;
+        }
+        & > a {
+            margin: 0;
+            padding: 0;
+        }
+        .specs {
+            padding: 0;
+            margin-bottom: 0px;
+        }
+        label {
+            margin: 0;
+        }
+
+        &.active:after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            box-shadow: inset 0 0 3px rgba(0,0,0,0.1);
+            transform: rotate(-45deg);
+            top: 20px;
+            right: -20px;
+        }
+    }
+}
