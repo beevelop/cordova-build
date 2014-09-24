@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var extend = require('extend'),
-    cordovaBuild = require('../'),
-    conf = require('../lib/common/conf.js')(),
-    serverUtils = require('../lib/common/serverUtils.js'),
-    listen = conf.listen;
+var extend = require('extend');
+var cordovaBuild = require('../');
+var conf = require('../lib/common/conf.js')();
+var serverUtils = require('../lib/common/serverUtils.js');
+var listen = conf.listen;
 
 //process.on('uncaughtException', function(err) {
 //    console.log(err);
@@ -43,6 +43,7 @@ if (listen.server || listen.ui) {
     var server = conf.serverInstance = new cordovaBuild.Server(conf);
     server.listen();
 }
+
 if (listen.agent) {
     var platforms = conf.agent.split(/,|;/g);
     var agents = [];
@@ -59,4 +60,9 @@ if (listen.client) {
     conf.build = (conf.build || 'ios,android,wp8').split(/,|;/g);
     var client = new cordovaBuild.ClientWorker(conf);
     client.connect();
+}
+
+if (listen.git) {
+    var git = new cordovaBuild.GitServer(conf);
+    git.listen();
 }
