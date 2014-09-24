@@ -9,12 +9,24 @@ module.exports = function (grunt) {
                 src: "www/js/index.js",
                 dest: "www/js/bundle.js"
             }
+        },
+        jsdoc : {
+            dist : {
+                src: ['lib/**/*.js'], 
+                options: {
+                    destination: 'doc',
+                    template:  "node_modules/jaguarjs-jsdoc",
+                    configure: "node_modules/jaguarjs-jsdoc/conf.json"
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-jsdoc');
     
     grunt.registerTask('default', 'jshint');
     grunt.registerTask('bundle', 'browserify');
+    grunt.registerTask('docs', 'jsdoc');
 };
