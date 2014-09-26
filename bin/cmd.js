@@ -6,16 +6,12 @@ var conf = require('../lib/common/conf.js')();
 var serverUtils = require('../lib/common/serverUtils.js');
 var listen = conf.listen;
 
-//process.on('uncaughtException', function(err) {
-//    console.log(err);
-//    process.stdin.resume();
-//    console.log("press enter to close");
-//    process.stdin.setEncoding('utf8');
+process.on('uncaughtException', function(err) {
+    console.log('Uncaught Exception:');
+    console.log(err);
+    console.log(err.stack);
+});
 
-//    process.stdin.on('data', function (chunk) {
-//        process.exit(err && err.code)
-//    });
-//});
 try {
     process.openStdin().on('keypress', function(chunk, key) {
         if (key && key.name === 'c' && key.ctrl) {
@@ -57,7 +53,6 @@ if (listen.agent) {
 }
 
 if (listen.client) {
-    conf.build = (conf.build || 'ios,android,wp8').split(/,|;/g);
     var client = new cordovaBuild.ClientWorker(conf);
     client.connect();
 }
