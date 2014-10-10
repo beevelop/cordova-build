@@ -1,64 +1,64 @@
 {
-  "name": "cordova-build",
-  "version": "0.1.0",
-  "description": "Cordova build - an alternative to phonegap build that runs on your servers/agents",
-  "main": "index.js",
-  "bin": "bin/cmd.js",
-  "author": "dotnetwise <laurentiu.macovei@dotnetwise.com>",
-  "contributors": [
-    {
-      "name": "Maik Hummel",
-      "email": "info@mh-programming.de"
-    }
-  ],
-  "dependencies": {
-    "adm-zip": "~0.4.4",
-    "array-sugar": "~0.2.4",
-    "async": "~0.9.0",
-    "circular-json": "~0.1.6",
-    "date-format-lite": "~0.5.0",
-    "elapsed": "0.0.3",
-    "express": "~4.9.3",
-    "extend": "~1.3.0",
-    "fast-class": "~1.729.121805",
-    "filesize": "~2.0.3",
-    "fs-extra": "^0.11.1",
-    "git-server": "^0.2.0",
-    "graceful-fs": "~3.0.2",
-    "mu2": "~0.5.20",
-    "multi-glob": "~0.4.0",
-    "node-commandline": "~0.2.0",
-    "npmlog": "~0.1.1",
-    "proto-typer": "~0.2.2",
-    "shortid": "~2.0.0",
-    "socket.io": "~1.1.0",
-    "stringformat": "0.0.5",
-    "unzip": "~0.1.11",
-    "whereis": "^0.4.0"
-  },
-  "devDependencies": {
-    "grunt": "0.4.5",
-    "grunt-browserify": "^3.0.1",
-    "grunt-cli": "0.1.13",
-    "grunt-contrib-jshint": "0.10.0",
-    "grunt-jsdoc": "^0.5.7",
-    "jaguarjs-jsdoc": "0.0.1",
-    "knockout": "^3.2.0"
-  },
-  "scripts": {
-    "test": "grunt --verbose"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/beevelop/cordova-build"
-  },
-  "bugs": {
-    "url": "https://github.com/beevelop/cordova-build/issues"
-  },
-  "keywords": [
-    "cordova",
-    "phonegap",
-    "build",
-    "server"
-  ]
+    "name": "cordova-build",
+    "version": "0.1.0",
+    "description": "Cordova build - an alternative to phonegap build that runs on your servers/agents",
+    "main": "index.js",
+    "bin": "bin/cmd.js",
+    "author": "dotnetwise <laurentiu.macovei@dotnetwise.com>",
+    "contributors": [
+        {
+            "name": "Maik Hummel",
+            "email": "info@mh-programming.de"
+        }
+    ],
+    "dependencies": {
+        "adm-zip": "~0.4.4",
+        "array-sugar": "^0.2.4",
+        "async": "~0.9.0",
+        "circular-json": "~0.1.6",
+        "date-format-lite": "~0.5.0",
+        "elapsed": "0.0.3",
+        "express": "^4.9.7",
+        "extend": "^1.3.0",
+        "fast-class": "^1.1011.122041",
+        "filesize": "~2.0.3",
+        "fs-extra": "^0.12.0",
+        "git-server": "~0.2.0",
+        "graceful-fs": "~3.0.2",
+        "mu2": "~0.5.20",
+        "multi-glob": "~0.4.0",
+        "node-commandline": "~0.2.0",
+        "npmlog": "~0.1.1",
+        "proto-typer": "~0.2.2",
+        "shortid": "~2.0.0",
+        "socket.io": "~1.1.0",
+        "stringformat": "0.0.5",
+        "unzip": "~0.1.11",
+        "whereis": "~0.4.0"
+    },
+    "devDependencies": {
+        "grunt": "0.4.5",
+        "grunt-browserify": "^3.0.1",
+        "grunt-cli": "0.1.13",
+        "grunt-contrib-jshint": "0.10.0",
+        "grunt-jsdoc": "^0.5.7",
+        "jaguarjs-jsdoc": "0.0.1",
+        "knockout": "^3.2.0"
+    },
+    "scripts": {
+        "test": "grunt --verbose"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/beevelop/cordova-build"
+    },
+    "bugs": {
+        "url": "https://github.com/beevelop/cordova-build/issues"
+    },
+    "keywords": [
+        "cordova",
+        "phonegap",
+        "build",
+        "server"
+    ]
 }
