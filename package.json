@@ -42,7 +42,6 @@
         "grunt-cli": "0.1.13",
         "grunt-contrib-jshint": "0.10.0",
         "grunt-jsdoc": "^0.5.7",
-        "jaguarjs-jsdoc": "0.0.1",
         "knockout": "^3.2.0"
     },
     "scripts": {
