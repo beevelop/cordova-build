@@ -87,3 +87,4 @@ node_modules
 /*.user
 bin/tmp/
 nbproject
+.idea/
