@@ -55,7 +55,7 @@
                                             alt: $data.platform,
                                             rel: (unwrap(qr) || '').indexOf('data:') + 1 ? qr : null,
                                             title: $('#encoder').text([unwrap($data.platform), ' #', $data.conf && $data.conf.number || unwrap(id), ' ', unwrap(status) == 'success' ? '' : unwrap(status)].join('')).html(),
-                                            src: ('img/platforms/' + unwrap($data && $data.platform || $data) + '.png'),
+                                            src: ('img/platforms/' + ($data.platforms().length > 1 ? 'cordova' : unwrap($data && $data.platform || $data)) + '.png'),
                                             alt: $data.platform
                                         }" class="platform" />
                                 </a>
