@@ -9973,7 +9973,7 @@ WS.prototype.addEventListeners = function(){
 };
 
 /**
- * Override `onData` to use a timer on iOS.
+ * Override `onData` to use a timer on IOS.
  * See: https://gist.github.com/mloughran/2052006
  *
  * @api private
