@@ -37,7 +37,7 @@ try {
 
 if (listen.server || listen.ui) {
     var server = conf.serverInstance = new cordovaBuild.Server(conf);
-    server.listen();
+    server.init();
 }
 
 if (listen.agent) {
