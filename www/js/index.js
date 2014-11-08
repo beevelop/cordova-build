@@ -1,7 +1,6 @@
 var ioc = require('socket.io/node_modules/socket.io-client');
 require('../../lib/common/utils.js');
 var Msg = require('../../lib/common/Msg.js');
-require('./qtip.js');
 var ko = require('knockout');
 var Elapsed = require('elapsed');
 var stringformat = require('stringformat');
@@ -95,13 +94,13 @@ ServerBrowser.define({
         return this.conf.promote && stringformat(this.conf.promote, build);
     },
     statuses: {
-        'building': 'img/platforms/building.gif',
+        'building':  'img/platforms/building.gif',
         'uploading': 'img/platforms/working.gif',
-        'queued': 'img/platforms/queue.gif',
-        'working': 'img/platforms/working.gif',
-        'failed': 'img/platforms/fail.png',
+        'queued':    'img/platforms/queue.gif',
+        'working':   'img/platforms/working.gif',
+        'failed':    'img/platforms/fail.png',
         'cancelled': 'img/platforms/cancelled.png',
-        'unknown': 'img/platforms/unknown.png'
+        'unknown':   'img/platforms/unknown.png'
     },
     platformNames: {
         'ios': 'IOS',
@@ -170,7 +169,6 @@ ServerBrowser.define({
                     var msg = new Msg(build);
                     list.unshift(msg);
                     build = this.builds.map[build && build.buildId];
-                    //console.log("log", status.obj, build, this)
                     build && build.logs.unshift(msg);
                     break;
                 case 'queued':
@@ -233,15 +231,12 @@ ServerBrowser.define({
                         return item.id == id;
                     });
                     delete list.map[status.obj.id];
-                    //console.log('LIST', status.obj.id, status, list.map, list);
                     break;
             }
             return status.obj;
         }
     },
     'onStatus': function(status) {
-        //console.log('status', status);
-
         if (status) {
             status.agents = status.agents || [];
             this.logs((status.logs || []).map(function(log) {
@@ -257,8 +252,7 @@ ServerBrowser.define({
                 var vm = map[build.id];
                 if (vm) {
                     vm.update(build);
-                }
-                else {
+                }  else {
                     vm = new BuildVM(build);
                     map[build.id] = vm;
                     this == 1 ? builds.unshift(vm) : this.platforms.push(vm);
@@ -271,6 +265,12 @@ ServerBrowser.define({
             }.bind(1));
 
             this.agents(status.agents);
+
+            // Sort builds by date
+            builds.sort(function (a, b) {
+                return new Date(b.conf.started) - new Date(a.conf.started);
+            });
+
             this.builds(builds);
             var initialBuildId = this.initialBuildId;
             var selectBuild = builds.findOne(function(build) {
@@ -278,11 +278,12 @@ ServerBrowser.define({
             }) || builds[0];
             if (selectBuild) {
                 var sb = this.selectedBuild();
-                if (!sb || !this.builds.map[sb.id])
+                if (!sb || !this.builds.map[sb.id]) {
                     this.selectedBuild(selectBuild);
-            }
-            else
+                }
+            }  else {
                 this.selectedBuild(null);
+            }
         }
     },
     generateQR: function(url, level) {
@@ -291,7 +292,6 @@ ServerBrowser.define({
             level: level || 'H',
             size: 10
         });
-        //console.warn(uri);
         return uri;
     },
     refresh: function() {
