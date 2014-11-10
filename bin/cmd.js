@@ -59,5 +59,5 @@ if (listen.client) {
 
 if (listen.git) {
     var git = new cordovaBuild.GitServer(conf);
-    git.listen();
+    git.init();
 }
