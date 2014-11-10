@@ -17,4 +17,13 @@
 ## WP8-Agent
 - [Windows Phone SDK](http://dev.windows.com/de-de/develop/download-phone-sdk)
 
+## Git-Server
+- [Git] (http://git-scm.com/)
+- Environment variables (PATH):
+    - Windows:
+        - [...]\Git\libexec\git-core
+        - [...]\Git\bin
+        - [...]\Git\cmd
+
+
 **\* optional**
