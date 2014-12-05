@@ -55,7 +55,7 @@ Msg.define({
                 by = '[S] Server';
                 break;
         }
-        if (doNotIncludePrefix || this.priority == Msg.build_output && doNotIncludePrefix !== false) {
+        if (doNotIncludePrefix || this.priority == Msg.buildLog && doNotIncludePrefix !== false) {
             msg = this.message;
         } else {
             msg = [by, this.senderName || this.senderId ? ' @{0}' : '', this.buildNumber || this.buildId ? ' about #{1}' : '', ': ', this.message];
@@ -73,7 +73,7 @@ Msg.define({
     }
 }).defineStatic({
     debug: 6,
-    build_output: 5,
+    buildLog: 5,
     info: 4,
     status: 3,
     warning: 2,
