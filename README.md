@@ -1,8 +1,8 @@
 [![Code Climate](https://codeclimate.com/github/beevelop/cordova-build/badges/gpa.svg)](https://codeclimate.com/github/beevelop/cordova-build)
+[![Codacy Badge](https://www.codacy.com/project/badge/a0d7bb110bac44dda5f0e7befac1960a)](https://www.codacy.com/public/yo/cordova-build)
 [![Build Status](https://travis-ci.org/beevelop/cordova-build.svg?branch=master)](https://travis-ci.org/beevelop/cordova-build)
-[![Stories in Ready](https://badge.waffle.io/beevelop/cordova-build.svg?label=ready&title=Ready)](http://waffle.io/beevelop/cordova-build)
 [![Dependency Status](https://gemnasium.com/beevelop/cordova-build.svg)](https://gemnasium.com/beevelop/cordova-build)
-[![Build Status](https://drone.io/github.com/beevelop/cordova-build/status.png)](https://drone.io/github.com/beevelop/cordova-build/latest)
+[![Stories in Ready](https://badge.waffle.io/beevelop/cordova-build.svg?label=ready&title=Ready)](http://waffle.io/beevelop/cordova-build)
 
 # cordova-build
 
