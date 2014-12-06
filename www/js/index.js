@@ -2,7 +2,6 @@ var ioc = require('socket.io/node_modules/socket.io-client');
 require('../../lib/common/utils.js');
 var Msg = require('../../lib/common/Msg.js');
 var ko = require('knockout');
-var Elapsed = require('elapsed');
 var stringformat = require('stringformat');
 
 module.exports = ServerBrowser;
@@ -287,12 +286,11 @@ ServerBrowser.define({
         }
     },
     generateQR: function(url, level) {
-        var uri = qr.toDataURL({
+        return qr.toDataURL({
             value: url,
             level: level || 'H',
             size: 10
         });
-        return uri;
     },
     refresh: function() {
         this.socket.emit('refresh');
