@@ -50,7 +50,6 @@ function ServerBrowser(conf) {
     function updateHash() {
         var build = selectedBuild();
         var tab = selectedTab();
-        //console.error("TAB", tab, build && build.id, build);
         if (tab == '#noBuild') {
             tab = initialTab;
         }
@@ -90,7 +89,7 @@ ServerBrowser.define({
         this.socket.emit('cancel', build && build.id);
     },
     promote: function(build) {
-        return this.conf.promote && stringformat(this.conf.promote, build);
+        return this.conf.promote && this.conf.promote.format(build);
     },
     statuses: {
         'building':  'img/platforms/building.gif',

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var extend = require('extend');
 var cordovaBuild = require('../');
 var conf = require('../lib/common/conf.js')();
