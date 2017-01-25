@@ -21,7 +21,7 @@
     "express": "^4.10.4",
     "extend": "^3.0.0",
     "fast-class": "^1.1011.122041",
-    "filesize": "~3.4.0",
+    "filesize": "~3.5.0",
     "fs-extra": "^2.0.0",
     "git-server": "~0.2.0",
     "graceful-fs": "^4.1.9",
