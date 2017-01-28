@@ -18,7 +18,7 @@
     "circular-json": "~0.3.1",
     "date-format-lite": "^0.9.1",
     "elapsed": "0.0.7",
-    "express": "^4.10.4",
+    "express": "^4.14.1",
     "extend": "^3.0.0",
     "fast-class": "^1.1011.122041",
     "filesize": "~3.5.0",
