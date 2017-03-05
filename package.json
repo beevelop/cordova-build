@@ -30,7 +30,7 @@
     "node-commandline": "~0.2.0",
     "npmlog": "~4.0.0",
     "proto-typer": "~0.2.2",
-    "shortid": "^2.0.1",
+    "shortid": "2.2.6",
     "socket.io": "^1.2.1",
     "stringformat": "0.0.5",
     "unzip": "~0.1.11",
